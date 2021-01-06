@@ -1,11 +1,12 @@
 import { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { move } from 'store/actions'
-import { getNode } from 'store/reducers'
+import { getNode, getTick } from 'store/reducers'
 import { addBody, removeBody, setVelocity } from 'store/thunks/physics'
 
 export default function useBody(node, physics) {
   const body = useRef()
+  const tick = useSelector(getTick)
   const { velocity } = useSelector(getNode(node))
   const dispatch = useDispatch()
 
@@ -21,7 +22,7 @@ export default function useBody(node, physics) {
     if (velocity) {
       setVelocity(body.current, velocity)
     }
-  }, [velocity])
+  }, [tick, velocity])
 
   return body.current
 }

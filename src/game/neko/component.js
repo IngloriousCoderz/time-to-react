@@ -1,6 +1,5 @@
 import useBody from 'components/hooks/useBody'
 import AnimatedSprite from 'components/sprite/animated-sprite'
-import { useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { getNode } from 'store/reducers'
 import * as Vector from 'utils/vector'

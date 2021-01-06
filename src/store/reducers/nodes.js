@@ -1,6 +1,6 @@
+import { state as initialState } from 'game/neko/config.json'
+import neko from 'game/neko/reducer'
 import { KEY_PRESSED } from 'store/actionTypes'
-
-import neko, { initialState } from './neko'
 
 export default function nodes(state = { neko: initialState }, action) {
   switch (action.type) {

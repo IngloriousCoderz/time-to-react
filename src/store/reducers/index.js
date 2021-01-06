@@ -9,6 +9,7 @@ import tick from './tick'
 export const getStageSize = ({ stage }) => stage.size
 export const getTick = ({ tick }) => tick
 export const getFps = ({ tick }) => tick.fps
+export const getInput = ({ input }) => input
 export const isKeyPressed = ({ input }) =>
   Object.keys(input).some((key) => input[key])
 export const getNode = (key) => ({ nodes }) => nodes[key]

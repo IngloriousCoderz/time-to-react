@@ -1,0 +1,37 @@
+.keys {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-areas:
+    '. up .'
+    'left down right';
+}
+
+.key {
+  width: 4rem;
+  height: 4rem;
+  background-color: lightgrey;
+  filter: brightness(75%);
+  box-shadow: inset 0px -2px 2px grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.up {
+  grid-area: up;
+}
+
+.left {
+  grid-area: left;
+}
+
+.down {
+  grid-area: down;
+}
+
+.right {
+  grid-area: right;
+}

@@ -1,17 +1,11 @@
 import { move } from 'store/actions'
 import { KEY_PRESSED } from 'store/actionTypes'
-import { Keys } from 'store/thunks/input'
+import position from 'store/reducers/position'
 import * as Vector from 'utils/vector'
 
-import position from './position'
+import { state as initialState } from './config.json'
 
-export const initialState = {
-  speed: 200,
-  position: { x: 0, y: 0 },
-  animation: { state: 'idle' },
-}
-
-export default function neko(state = {}, action) {
+export default function neko(state = initialState, action) {
   switch (action.type) {
     case KEY_PRESSED:
       const { input, delta, stageSize } = action.payload
@@ -34,16 +28,16 @@ export default function neko(state = {}, action) {
 function calculateVelocity(input, speed, delta) {
   let velocity = { x: 0, y: 0 }
 
-  if (input[Keys.RIGHT]) {
+  if (input.ArrowRight) {
     velocity.x += 1
   }
-  if (input[Keys.LEFT]) {
+  if (input.ArrowLeft) {
     velocity.x -= 1
   }
-  if (input[Keys.DOWN]) {
+  if (input.ArrowDown) {
     velocity.y += 1
   }
-  if (input[Keys.UP]) {
+  if (input.ArrowUp) {
     velocity.y -= 1
   }
   velocity = Vector.normalize(velocity)

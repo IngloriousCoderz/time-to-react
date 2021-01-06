@@ -1,40 +1,32 @@
 import { keyPressed } from 'store/actions'
 
-export const Keys = {
-  LEFT: 37,
-  RIGHT: 39,
-  UP: 38,
-  DOWN: 40,
-  SPACE: 32,
-}
-
 let allowedKeys
-let keyDown, keyUp
+let handleKeyDown, handleKeyUp
 
 export const startListening = (keys) => (dispatch) => {
   allowedKeys = keys
-  keyDown = handleKeyDown(dispatch)
-  keyUp = handleKeyUp(dispatch)
+  handleKeyDown = keyDown(dispatch)
+  handleKeyUp = keyUp(dispatch)
 
-  window.addEventListener('keydown', keyDown)
-  window.addEventListener('keyup', keyUp)
+  window.addEventListener('keydown', handleKeyDown)
+  window.addEventListener('keyup', handleKeyUp)
 }
 
 export const stopListening = () => (dispatch) => {
-  window.removeEventListener('keydown', keyDown)
-  window.removeEventListener('keyup', keyUp)
+  window.removeEventListener('keydown', handleKeyDown)
+  window.removeEventListener('keyup', handleKeyUp)
 }
 
-const handleKeyDown = (dispatch) => (event) => {
-  if (allowedKeys.includes(event.keyCode)) {
+const keyDown = (dispatch) => (event) => {
+  if (allowedKeys.includes(event.key)) {
     event.preventDefault()
-    dispatch(keyPressed({ [event.keyCode]: true }))
+    dispatch(keyPressed({ [event.key]: true }))
   }
 }
 
-const handleKeyUp = (dispatch) => (event) => {
-  if (allowedKeys.includes(event.keyCode)) {
+const keyUp = (dispatch) => (event) => {
+  if (allowedKeys.includes(event.key)) {
     event.preventDefault()
-    dispatch(keyPressed({ [event.keyCode]: false }))
+    dispatch(keyPressed({ [event.key]: false }))
   }
 }

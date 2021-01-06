@@ -1,6 +1,6 @@
 import 'assets/reset.css'
 
-import Game from 'components/game'
+import Game from 'game'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
@@ -23,7 +23,9 @@ const composeEnhancers =
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
 
 store.dispatch(startLoop())
-store.dispatch(startListening([Keys.LEFT, Keys.RIGHT, Keys.UP, Keys.SPACE, 65]))
+store.dispatch(
+  startListening([Keys.LEFT, Keys.RIGHT, Keys.UP, Keys.DOWN, Keys.SPACE])
+)
 
 ReactDOM.render(
   <React.StrictMode>

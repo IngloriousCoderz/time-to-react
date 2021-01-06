@@ -1,19 +1,18 @@
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
-import { getDelta } from 'store/reducers'
-import styled from 'styled-components'
+import { getFps } from 'store/reducers'
 
-const Wrapper = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 1rem;
-`
+const style = {
+  position: 'absolute',
+  top: 0,
+  right: 0,
+  padding: '1rem',
+}
 
 function Fps() {
-  const delta = useSelector(getDelta)
+  const fps = useSelector(getFps)
 
-  return <Wrapper>{`${Math.round(1 / delta)} FPS`}</Wrapper>
+  return <div style={style}>{`${Math.round(fps)} FPS`}</div>
 }
 
 Fps.propTypes = {

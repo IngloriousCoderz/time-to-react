@@ -1,2 +1,5 @@
+export const SET_STAGE_SIZE = 'SET_STAGE_SIZE'
 export const TICK = 'TICK'
-export const PRESS_KEYS = 'PRESS_KEYS'
+export const KEY_PRESSED = 'KEY_PRESSED'
+export const HANDLE_INPUT = 'HANDLE_INPUT'
+export const MOVE = 'MOVE'

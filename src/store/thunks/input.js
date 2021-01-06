@@ -1,4 +1,4 @@
-import { pressKeys } from 'store/actions'
+import { keyPressed } from 'store/actions'
 
 export const Keys = {
   LEFT: 37,
@@ -28,13 +28,13 @@ export const stopListening = () => (dispatch) => {
 const handleKeyDown = (dispatch) => (event) => {
   if (allowedKeys.includes(event.keyCode)) {
     event.preventDefault()
-    dispatch(pressKeys({ [event.keyCode]: true }))
+    dispatch(keyPressed({ [event.keyCode]: true }))
   }
 }
 
 const handleKeyUp = (dispatch) => (event) => {
   if (allowedKeys.includes(event.keyCode)) {
     event.preventDefault()
-    dispatch(pressKeys({ [event.keyCode]: false }))
+    dispatch(keyPressed({ [event.keyCode]: false }))
   }
 }

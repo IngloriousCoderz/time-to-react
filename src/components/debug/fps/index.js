@@ -2,17 +2,12 @@ import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { getFps } from 'store/reducers'
 
-const style = {
-  position: 'absolute',
-  top: 0,
-  right: 0,
-  padding: '1rem',
-}
+import classes from './fps.module.css'
 
 function Fps() {
   const fps = useSelector(getFps)
 
-  return <div style={style}>{`${Math.round(fps)} FPS`}</div>
+  return <div className={classes.fps}>{`${Math.round(fps)} FPS`}</div>
 }
 
 Fps.propTypes = {

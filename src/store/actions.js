@@ -6,4 +6,7 @@ export const setStageSize = (size) => ({
 })
 export const tick = (delta) => ({ type: Types.TICK, payload: delta })
 export const keyPressed = (keys) => ({ type: Types.KEY_PRESSED, payload: keys })
-export const move = (direction) => ({ type: Types.MOVE, payload: direction })
+export const move = (node, direction) => ({
+  type: Types.MOVE,
+  payload: direction,
+})

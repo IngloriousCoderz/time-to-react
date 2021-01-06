@@ -1,5 +1,6 @@
-import Fps from 'components/fps'
-import Keys from 'components/keys'
+import Fps from 'components/debug/fps'
+import Keys from 'components/debug/keys'
+import Physics from 'components/physics'
 import Stage from 'components/stage'
 
 import Neko from './neko/component'
@@ -7,7 +8,9 @@ import Neko from './neko/component'
 function Game() {
   return (
     <Stage>
-      <Neko />
+      <Physics>
+        <Neko />
+      </Physics>
       <Fps />
       <Keys />
     </Stage>

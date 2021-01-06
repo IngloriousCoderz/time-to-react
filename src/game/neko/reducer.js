@@ -1,5 +1,5 @@
 import { move } from 'store/actions'
-import { KEY_PRESSED } from 'store/actionTypes'
+import { KEY_PRESSED, MOVE } from 'store/actionTypes'
 import position from 'store/reducers/position'
 import * as Vector from 'utils/vector'
 
@@ -11,13 +11,19 @@ export default function neko(state = initialState, action) {
       const { input, delta, stageSize } = action.payload
 
       const velocity = calculateVelocity(input, state.speed, delta)
-      const direction = calculateDirection(state.position, velocity, stageSize)
+      // const direction = calculateDirection(state.position, velocity, stageSize)
 
       return {
         ...state,
         velocity,
-        position: position(state.position, move(direction)),
+        // position: position(state.position, move(direction)),
         animation: calculateAnimation(velocity),
+      }
+
+    case MOVE:
+      return {
+        ...state,
+        position: action.payload,
       }
 
     default:

@@ -1,8 +1,11 @@
-import AnimatedSprite from 'components/animated-sprite'
+import useBody from 'components/hooks/useBody'
+import AnimatedSprite from 'components/sprite/animated-sprite'
+import { useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { getNode } from 'store/reducers'
+import * as Vector from 'utils/vector'
 
-import { sprite } from './config.json'
+import { physics, sprite } from './config.json'
 
 const { cols, height, rows, sheet, states, width } = sprite
 
@@ -11,7 +14,10 @@ const style = {
 }
 
 function Neko() {
-  const { position, animation } = useSelector(getNode('neko'))
+  const body = useBody('neko', physics)
+  const { animation } = useSelector(getNode('neko'))
+
+  const position = body ? body.position : Vector.ZERO
 
   const top = `${position.y}px`
   const left = `${position.x}px`

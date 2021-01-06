@@ -10,6 +10,7 @@ import { TICK } from 'store/actionTypes'
 import rootReducer from 'store/reducers'
 import { startListening } from 'store/thunks/input'
 import { startLoop } from 'store/thunks/loop'
+import { startPhysics } from 'store/thunks/physics'
 
 import reportWebVitals from './reportWebVitals'
 
@@ -22,6 +23,7 @@ const composeEnhancers =
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
 
+store.dispatch(startPhysics())
 store.dispatch(startLoop())
 store.dispatch(
   startListening(['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', ' '])

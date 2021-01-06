@@ -12,7 +12,7 @@ export const startListening = (keys) => (dispatch) => {
   window.addEventListener('keyup', handleKeyUp)
 }
 
-export const stopListening = () => (dispatch) => {
+export const stopListening = () => {
   window.removeEventListener('keydown', handleKeyDown)
   window.removeEventListener('keyup', handleKeyUp)
 }

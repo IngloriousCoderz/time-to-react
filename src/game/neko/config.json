@@ -1,6 +1,6 @@
 {
   "state": {
-    "speed": 200,
+    "speed": 400,
     "position": {
       "x": 0,
       "y": 0
@@ -8,6 +8,10 @@
     "animation": {
       "state": "idle"
     }
+  },
+  "physics": {
+    "shape": "rectangle",
+    "args": [0, 0, 32, 32]
   },
   "sprite": {
     "sheet": "sprites/neko.png",

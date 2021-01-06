@@ -9,7 +9,7 @@ export const startLoop = () => (dispatch) => {
   loop(dispatch)
 }
 
-export const stopLoop = () => (dispatch) => {
+export const stopLoop = () => {
   window.cancelAnimationFrame(id)
   id = null
 }

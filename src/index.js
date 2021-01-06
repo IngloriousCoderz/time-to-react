@@ -8,6 +8,7 @@ import { applyMiddleware, compose, createStore } from 'redux'
 import thunk from 'redux-thunk'
 import { TICK } from 'store/actionTypes'
 import rootReducer from 'store/reducers'
+import { Keys, startListening } from 'store/thunks/input'
 import { startLoop } from 'store/thunks/loop'
 
 import reportWebVitals from './reportWebVitals'
@@ -22,6 +23,7 @@ const composeEnhancers =
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
 
 store.dispatch(startLoop())
+store.dispatch(startListening([Keys.LEFT, Keys.RIGHT, Keys.UP, Keys.SPACE, 65]))
 
 ReactDOM.render(
   <React.StrictMode>

@@ -14,7 +14,7 @@
   height: 4rem;
   background-color: lightgrey;
   filter: brightness(75%);
-  box-shadow: inset 0px -2px 2px grey;
+  box-shadow: inset 0px -4px 2px grey;
   display: flex;
   justify-content: center;
   align-items: center;

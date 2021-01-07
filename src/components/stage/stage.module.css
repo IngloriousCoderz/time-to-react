@@ -1,4 +1,4 @@
 .stage {
-  background-color: #4c4c4c;
-  width: 100vw;
+  transform-origin: top left;
+  position: relative;
 }

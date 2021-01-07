@@ -6,6 +6,13 @@ export function clamp(value, min, max) {
   return value
 }
 
+export function round(vector) {
+  return Object.keys(vector).reduce(
+    (acc, key) => ({ ...acc, [key]: Math.round(vector[key]) }),
+    {}
+  )
+}
+
 export function length(vector) {
   return Math.sqrt(
     Object.keys(vector)

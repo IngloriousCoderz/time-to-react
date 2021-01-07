@@ -1,10 +1,11 @@
 import { keyPressed } from 'store/actions'
+import { getAllowedKeys } from 'store/reducers'
 
 let allowedKeys
 let handleKeyDown, handleKeyUp
 
-export const startListening = (keys) => (dispatch) => {
-  allowedKeys = keys
+export const startListening = () => (dispatch, getState) => {
+  allowedKeys = getAllowedKeys(getState())
   handleKeyDown = keyDown(dispatch)
   handleKeyUp = keyUp(dispatch)
 

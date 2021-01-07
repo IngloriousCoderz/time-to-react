@@ -1,6 +1,16 @@
 import PropTypes from 'prop-types'
 
-function Sprite({ sheet, width, height, rows, cols, cell, flip, children }) {
+function Sprite({
+  sheet,
+  width,
+  height,
+  rows,
+  cols,
+  scale,
+  cell,
+  flip,
+  children,
+}) {
   const cellWidth = width / cols
   const cellHeight = height / rows
 
@@ -30,6 +40,7 @@ Sprite.propTypes = {
   height: PropTypes.number.isRequired,
   rows: PropTypes.number.isRequired,
   cols: PropTypes.number.isRequired,
+  scale: PropTypes.number.isRequired,
   cell: PropTypes.arrayOf(PropTypes.number).isRequired,
   flip: PropTypes.string,
 }
@@ -37,6 +48,7 @@ Sprite.propTypes = {
 Sprite.defaultProps = {
   rows: 1,
   cols: 1,
+  scale: 1,
   cell: [0, 0],
   flip: '',
 }

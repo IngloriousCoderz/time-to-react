@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux'
-import { getInput } from 'store/reducers'
+import { getKeys } from 'store/reducers'
 
 import classes from './keys.module.css'
 
 function Keys() {
-  const { ArrowUp, ArrowLeft, ArrowDown, ArrowRight } = useSelector(getInput)
+  const { ArrowUp, ArrowLeft, ArrowDown, ArrowRight } = useSelector(getKeys)
 
   return (
     <div className={classes.keys}>

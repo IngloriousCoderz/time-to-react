@@ -1,27 +1,34 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { setStageSize } from 'store/actions'
-import { getStageSize } from 'store/reducers'
+import { useEffect, useState } from 'react'
 
-export default function useWindowSize(aspectRatio) {
-  const windowSize = useSelector(getStageSize)
-  const dispatch = useDispatch()
+export default function useWindowSize(width, height) {
+  const [scale, setScale] = useState(1)
 
   useEffect(() => {
-    const handleResize = () =>
-      dispatch(
-        setStageSize({
-          width: window.innerWidth,
-          height: window.innerWidth / aspectRatio,
-        })
-      )
+    const handleResize = () => {
+      const vwidth = window.innerWidth
+      const vheight = window.innerHeight
+
+      let targetWidth, targetHeight, targetScale
+
+      if (height / width > vheight / vwidth) {
+        targetHeight = vheight
+        targetWidth = (targetHeight * width) / height
+        targetScale = vheight / height
+      } else {
+        targetWidth = vwidth
+        targetHeight = (targetWidth * height) / width
+        targetScale = vwidth / width
+      }
+
+      setScale(targetScale)
+    }
 
     window.addEventListener('resize', handleResize)
 
     handleResize()
 
     return () => window.removeEventListener('resize', handleResize)
-  }, [aspectRatio, dispatch])
+  }, [width, height])
 
-  return windowSize
+  return scale
 }

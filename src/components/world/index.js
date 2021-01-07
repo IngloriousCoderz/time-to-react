@@ -1,17 +1,16 @@
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { getTick } from 'store/reducers'
 import { updatePhysics } from 'store/thunks/physics'
 
-function Physics({ children }) {
+function World({ children }) {
   const tick = useSelector(getTick)
-  const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(updatePhysics())
-  }, [tick, dispatch])
+    updatePhysics(tick.delta)
+  }, [tick])
 
   return children
 }
 
-export default Physics
+export default World

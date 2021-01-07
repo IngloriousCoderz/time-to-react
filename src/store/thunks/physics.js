@@ -1,38 +1,27 @@
 import Matter from 'matter-js'
-import { getDelta, getStageSize } from 'store/reducers'
-
-const gravity = {
-  x: 0,
-  y: 1,
-  scale: 0.001,
-}
 
 let engine
-let onBodyUpdate
 
-export const startPhysics = () => (dispatch, getState) => {
-  const stageSize = getStageSize(getState())
+export const startPhysics = (config) => {
+  const { stage, physics } = config
   const world = Matter.World.create({
-    gravity,
-    // TODO: stageSize is still undefined here
+    ...physics,
     bounds: {
       min: { x: 0, y: 0 },
-      max: { x: stageSize.width, y: stageSize.height },
+      max: { x: stage.width, y: stage.height },
     },
   })
   engine = Matter.Engine.create({ world })
 }
 
-export const updatePhysics = () => (dispatch, getState) => {
-  const delta = getDelta(getState())
+export const updatePhysics = (delta) => {
   Matter.Engine.update(engine, delta)
 }
 
-export const addBody = ({ shape, args, onUpdate, ...options }) => {
-  onBodyUpdate = onUpdate
+export const addBody = ({ shape, args, ...options }, listeners) => {
   const body = Matter.Bodies[shape](...args, options)
   Matter.World.addBody(engine.world, body)
-  Matter.Events.on(engine, 'afterUpdate', onUpdate)
+  Matter.Events.on(engine, 'afterUpdate', listeners.onUpdate)
   return body
 }
 
@@ -40,7 +29,7 @@ export const setVelocity = (body, velocity) => {
   Matter.Body.setVelocity(body, velocity)
 }
 
-export const removeBody = (body) => {
-  Matter.Events.off(engine, 'afterUpdate', onBodyUpdate)
+export const removeBody = (body, listeners) => {
+  Matter.Events.off(engine, 'afterUpdate', listeners.onUpdate)
   Matter.World.remove(engine.world, body)
 }

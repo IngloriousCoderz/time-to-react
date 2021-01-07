@@ -3,23 +3,31 @@ import PropTypes from 'prop-types'
 import useWindowSize from '../hooks/useWindowSize'
 import classes from './stage.module.css'
 
-function Stage({ aspectRatio, children }) {
-  const windowSize = useWindowSize(aspectRatio)
-  const height = `calc(100vw / ${aspectRatio})`
+function Stage({ width, height, background, children }) {
+  const scale = useWindowSize(width, height)
 
-  return windowSize ? (
-    <div className={classes.stage} style={{ height }}>
+  const style = {
+    width,
+    height,
+    background,
+    transform: `scale(${scale})`,
+  }
+
+  return (
+    <div className={classes.stage} style={style}>
       {children}
     </div>
-  ) : null
+  )
 }
 
 Stage.propTypes = {
-  aspectRatio: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  background: PropTypes.string,
 }
 
 Stage.defaultProps = {
-  aspectRatio: 16 / 9,
+  background: '#4c4c4c',
 }
 
 export default Stage

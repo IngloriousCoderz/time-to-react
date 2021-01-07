@@ -1,39 +1,40 @@
 import { KEY_PRESSED, MOVE } from 'store/actionTypes'
 import * as Vector from 'utils/vector'
 
-import { state as initialState } from './config.json'
-
-export default function neko(state = initialState, action) {
+export default function neko(state = {}, action) {
   switch (action.type) {
     case KEY_PRESSED:
-      const { input, delta } = action.payload
+      const { keys, delta } = action.payload
 
-      const velocity = updateVelocity(input, state.speed, delta)
+      const velocity = updateVelocity(keys, state.state.speed, delta)
       const animation = updateAnimation(velocity)
 
-      return { ...state, velocity, animation }
+      return { ...state, state: { ...state.state, velocity, animation } }
 
     case MOVE:
-      return { ...state, position: action.payload }
+      const { direction, bounds } = action.payload
+      direction.x = Vector.clamp(direction.x, bounds.x, bounds.width)
+      direction.y = Vector.clamp(direction.y, bounds.y, bounds.height)
+      return { ...state, state: { ...state.state, position: direction } }
 
     default:
       return state
   }
 }
 
-function updateVelocity(input, speed, delta) {
+function updateVelocity(keys, speed, delta) {
   let velocity = { x: 0, y: 0 }
 
-  if (input.ArrowRight) {
+  if (keys.ArrowRight) {
     velocity.x += 1
   }
-  if (input.ArrowLeft) {
+  if (keys.ArrowLeft) {
     velocity.x -= 1
   }
-  if (input.ArrowDown) {
+  if (keys.ArrowDown) {
     velocity.y += 1
   }
-  if (input.ArrowUp) {
+  if (keys.ArrowUp) {
     velocity.y -= 1
   }
   velocity = Vector.normalize(velocity)

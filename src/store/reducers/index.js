@@ -1,21 +1,28 @@
 import { combineReducers } from 'redux'
 
 import { KEY_PRESSED } from '../actionTypes'
+import debug from './debug'
 import input from './input'
 import nodes from './nodes'
+import physics from './physics'
 import stage from './stage'
 import tick from './tick'
 
-export const getStageSize = ({ stage }) => stage.size
+export const getStage = ({ stage }) => stage
+export const getPhysics = ({ physics }) => physics
 export const getTick = ({ tick }) => tick
-export const getDelta = ({tick}) => tick.delta
-export const getFps = ({ tick }) => tick.fps
-export const getInput = ({ input }) => input
-export const isKeyPressed = ({ input }) =>
-  Object.keys(input).some((key) => input[key])
-export const getNode = (key) => ({ nodes }) => nodes[key]
+export const getAllowedKeys = ({ input }) => input.allowedKeys
+export const getKeys = ({ input }) => input.keys
+export const getNode = (node) => ({ nodes }) => nodes[node]
 
-const combinedReducer = combineReducers({ stage, tick, input, nodes })
+const combinedReducer = combineReducers({
+  debug,
+  stage,
+  physics,
+  tick,
+  input,
+  nodes,
+})
 
 export default function rootReducer(state = {}, action) {
   switch (action.type) {
@@ -24,9 +31,8 @@ export default function rootReducer(state = {}, action) {
       const newAction = {
         ...action,
         payload: {
-          input: newInput,
+          keys: newInput.keys,
           delta: state.tick.delta,
-          stageSize: state.stage.size,
         },
       }
       return { ...state, input: newInput, nodes: nodes(state.nodes, newAction) }

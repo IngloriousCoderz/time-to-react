@@ -6,7 +6,6 @@ import { MOVE, TICK } from 'store/actionTypes'
 import rootReducer from 'store/reducers'
 import { startListening } from 'store/thunks/input'
 import { startLoop } from 'store/thunks/loop'
-import { startPhysics } from 'store/thunks/physics'
 
 import Fps from '../debug/fps'
 import Keys from '../debug/keys'
@@ -41,9 +40,6 @@ const store = createStore(
 )
 
 store.dispatch(startLoop())
-if (physics) {
-  startPhysics({ stage, physics })
-}
 store.dispatch(startListening())
 
 const availableNodes = { Neko }

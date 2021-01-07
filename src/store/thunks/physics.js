@@ -12,6 +12,7 @@ export const startPhysics = (config) => {
     },
   })
   engine = Matter.Engine.create({ world })
+  return world
 }
 
 export const updatePhysics = (delta) => {

@@ -14,7 +14,7 @@ function Sprite({
   const cellWidth = width / cols
   const cellHeight = height / rows
 
-  let transform = ''
+  let transform = `scale(${scale})`
   if (flip.includes('h')) {
     transform += ' scaleX(-1)'
   }

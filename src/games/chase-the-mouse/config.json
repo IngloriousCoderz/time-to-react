@@ -28,10 +28,10 @@
       "type": "Neko",
 
       "state": {
-        "speed": 200,
+        "speed": 400,
         "position": {
-          "x": 0,
-          "y": 0
+          "x": 16,
+          "y": 16
         },
         "velocity": {
           "x": 0,
@@ -43,12 +43,8 @@
       },
 
       "physics": {
-        "shape": "rectangle",
-        "args": [0, 0, 32, 32],
-        "restitution": 0,
-        "friction": 0.9999,
-        "frictionStatic": 0,
-        "inertia": "Infinity"
+        "shape": "circle",
+        "args": [0, 0, 16]
       },
 
       "sprite": {

@@ -28,7 +28,9 @@ export default function usePhysics(node) {
   useEffect(() => {
     const onUpdate = () =>
       dispatch(move(node, Vector.round(body.current.position), bounds))
+
     body.current = addBody(physics, { onUpdate })
+
     return () => removeBody(body.current, { onUpdate })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

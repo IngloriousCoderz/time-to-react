@@ -9,7 +9,7 @@ function Neko() {
   // usePhysics('neko')
   const { sprite, state } = useSelector(getNode('neko'))
 
-  const { cols, height, rows, sheet, states, width } = sprite
+  const { sheet, width, height, rows, cols, scale, states } = sprite
   const { position, animation } = state
   const { state: animationState, flip } = animation
 
@@ -27,6 +27,7 @@ function Neko() {
         height={height}
         rows={rows}
         cols={cols}
+        scale={scale}
         states={states}
         state={animationState}
         flip={flip}

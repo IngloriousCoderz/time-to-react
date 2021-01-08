@@ -1,12 +1,10 @@
 import useCustomPhysics from 'components/hooks/useCustomPhysics'
-import usePhysics from 'components/hooks/usePhysics'
 import AnimatedSprite from 'components/sprite/animated-sprite'
 import { useSelector } from 'react-redux'
 import { getNode } from 'store/reducers'
 
 function Neko() {
   useCustomPhysics('neko')
-  // usePhysics('neko')
   const { sprite, state } = useSelector(getNode('neko'))
 
   const { sheet, width, height, rows, cols, scale, states } = sprite

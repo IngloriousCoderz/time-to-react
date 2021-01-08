@@ -11,6 +11,7 @@
   },
 
   "physics": {
+    "type": "custom",
     "gravity": {
       "x": 0,
       "y": 1,
@@ -19,7 +20,8 @@
   },
 
   "input": {
-    "allowedKeys": ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", " "]
+    "allowedKeys": ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", " "],
+    "keys": {}
   },
 
   "nodes": [

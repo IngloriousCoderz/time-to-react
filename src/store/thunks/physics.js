@@ -1,18 +1,10 @@
 import Matter from 'matter-js'
 
-let engine
+export let engine
 
-export const startPhysics = (config) => {
-  const { stage, physics } = config
-  const world = Matter.World.create({
-    ...physics,
-    bounds: {
-      min: { x: 0, y: 0 },
-      max: { x: stage.width, y: stage.height },
-    },
-  })
+export const startPhysics = (physics) => {
+  const world = Matter.World.create(physics)
   engine = Matter.Engine.create({ world })
-  return world
 }
 
 export const updatePhysics = (delta) => {

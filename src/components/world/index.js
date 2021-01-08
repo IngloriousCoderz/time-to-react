@@ -1,22 +1,21 @@
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { getPhysics, getTick } from 'store/reducers'
-import { engine, startPhysics, updatePhysics } from 'store/thunks/physics'
+import { applyPhysics } from 'utils/physics'
 
 import classes from './world.module.css'
 
 function World({ children }) {
-  const physics = useSelector(getPhysics)
-  useEffect(() => {
-    startPhysics(physics)
-  }, [physics])
+  const config = useSelector(getPhysics)
+  const Physics = applyPhysics(config.type)
+  useEffect(() => Physics.start(config), [config, Physics])
 
   const tick = useSelector(getTick)
-  useEffect(() => {
-    updatePhysics(tick.delta)
-  }, [tick])
+  useEffect(() => Physics.update(tick.delta), [tick, Physics])
 
-  return <div className={classes.world}>{engine ? children : null}</div>
+  return (
+    <div className={classes.world}>{Physics.getEngine() ? children : null}</div>
+  )
 }
 
 export default World

@@ -16,12 +16,12 @@ const { default: game } = require('games/chase-the-mouse')
 const { store, nodes } = setup(game)
 
 function Game() {
-  const { stage, physics, debug } = game.config
+  const { stage, debug } = game.config
 
   return (
     <Provider store={store}>
       <Stage {...stage}>
-        {physics.type === 'matter-js' ? <World>{nodes}</World> : nodes}
+        <World>{nodes}</World>
         {debug.showFps && <Fps />}
         {debug.showKeys && <Keys />}
       </Stage>
@@ -75,17 +75,12 @@ function setupStore({ reducers }, initialState) {
 }
 
 function setupNodes({ config, components }) {
-  const { physics, nodes } = config
-
-  return nodes.map((node) => {
+  return config.nodes.map((node) => {
     const Node = components[node.id]
-    if (physics.type === 'matter-js') {
-      return (
-        <Body key={node.id} node={node.id}>
-          <Node {...node} />
-        </Body>
-      )
-    }
-    return <Node key={node.id} {...node} />
+    return (
+      <Body key={node.id} node={node.id}>
+        <Node {...node} />
+      </Body>
+    )
   })
 }

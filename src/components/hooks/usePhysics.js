@@ -1,46 +1,32 @@
 import { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { move } from 'store/actions'
-import { getNode, getStage, getTick } from 'store/reducers'
-import { addBody, removeBody, setVelocity } from 'store/thunks/physics'
-import * as Vector from 'utils/vector'
+import { getNode, getPhysics, getStage } from 'store/reducers'
+import { applyPhysics } from 'utils/physics'
 
 export default function usePhysics(node) {
-  const tick = useSelector(getTick)
+  const config = useSelector(getPhysics)
   const stage = useSelector(getStage)
-  const { physics, state, sprite } = useSelector(getNode(node))
+  const { physics, state } = useSelector(getNode(node))
+
+  const bounds = { x: 0, y: 0, width: stage.width, height: stage.height }
+
   const dispatch = useDispatch()
   const body = useRef()
-
-  const { velocity } = state
-  const { width, height, rows, cols } = sprite
-
-  const spriteWidth = width / cols
-  const spriteHeight = height / rows
-
-  const bounds = {
-    x: 0,
-    y: 0,
-    width: stage.width - spriteWidth,
-    height: stage.height - spriteHeight,
-  }
-
+  const Physics = applyPhysics(config.type)
   useEffect(() => {
-    const onUpdate = () =>
-      dispatch(move(node, Vector.round(body.current.position), bounds))
+    const onUpdate = () => dispatch(move(node, body.current.position, bounds))
 
-    body.current = addBody(physics, { onUpdate })
+    body.current = Physics.addBody(physics, { onUpdate })
 
-    return () => removeBody(body.current, { onUpdate })
+    return () => Physics.removeBody(body.current, { onUpdate })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const { velocity } = state
   useEffect(() => {
-    if (Vector.length(velocity)) {
-      setVelocity(body.current, velocity)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tick])
+    Physics.setVelocity(body.current, velocity)
+  }, [velocity, Physics])
 
   return body.current
 }

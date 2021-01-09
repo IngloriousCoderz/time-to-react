@@ -1,10 +1,9 @@
 import AnimatedSprite from 'components/sprite/animated-sprite'
-import { useSelector } from 'react-redux'
-import { getNode } from 'store/reducers'
 
-function Neko() {
-  const { sprite, state } = useSelector(getNode('neko'))
-  const { position, animation } = state
+function Neko({ state, sprite }) {
+  const { velocity, position } = state
+
+  const flip = velocity.x < 0 ? 'h' : ''
 
   const style = {
     position: 'absolute',
@@ -14,12 +13,7 @@ function Neko() {
 
   return (
     <div style={style}>
-      <AnimatedSprite
-        {...sprite}
-        state={animation.state}
-        flip={animation.flip}
-        repeat={true}
-      />
+      <AnimatedSprite {...sprite} state={state.id} flip={flip} />
     </div>
   )
 }

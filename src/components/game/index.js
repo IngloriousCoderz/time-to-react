@@ -1,4 +1,5 @@
 import Body from 'components/body'
+import Node from 'components/node'
 import { Provider } from 'react-redux'
 import { applyMiddleware, compose, createStore } from 'redux'
 import thunk from 'redux-thunk'
@@ -13,15 +14,26 @@ import Stage from '../stage'
 import World from '../world'
 
 const { default: game } = require('games/chase-the-mouse')
-const { store, nodes } = setup(game)
+
+const initialState = setupState(game)
+const store = setupStore(game.reducers, initialState)
+
+store.dispatch(startLoop())
+store.dispatch(startListening())
 
 function Game() {
-  const { stage, debug } = game.config
+  const { stage, nodes, debug } = game.config
 
   return (
     <Provider store={store}>
       <Stage {...stage}>
-        <World>{nodes}</World>
+        <World>
+          {nodes.map((node) => (
+            <Body key={node.id} node={node.id}>
+              <Node {...node} component={game.components[node.id]} />
+            </Body>
+          ))}
+        </World>
         {debug.showFps && <Fps />}
         {debug.showKeys && <Keys />}
       </Stage>
@@ -30,17 +42,6 @@ function Game() {
 }
 
 export default Game
-
-export function setup(game) {
-  const initialState = setupState(game)
-  const store = setupStore(game, initialState)
-  const nodes = setupNodes(game)
-
-  store.dispatch(startLoop())
-  store.dispatch(startListening())
-
-  return { store, nodes }
-}
 
 function setupState({ config }) {
   return {
@@ -55,7 +56,7 @@ function setupState({ config }) {
   }
 }
 
-function setupStore({ reducers }, initialState) {
+function setupStore(reducers, initialState) {
   const composeEnhancers =
     typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
       ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
@@ -72,15 +73,4 @@ function setupStore({ reducers }, initialState) {
   )
 
   return store
-}
-
-function setupNodes({ config, components }) {
-  return config.nodes.map((node) => {
-    const Node = components[node.id]
-    return (
-      <Body key={node.id} node={node.id}>
-        <Node {...node} />
-      </Body>
-    )
-  })
 }

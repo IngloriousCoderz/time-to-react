@@ -1,5 +1,5 @@
-import * as custom from './custom'
 import * as matter from './matter'
+import * as simple from './simple'
 
 export function applyPhysics(type) {
   switch (type) {
@@ -7,6 +7,6 @@ export function applyPhysics(type) {
       return matter
 
     default:
-      return custom
+      return simple
   }
 }

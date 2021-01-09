@@ -13,15 +13,13 @@ function AnimatedSprite({
   onAnimationEnd,
   ...rest
 }) {
-  const frames = states[state]
-
   const tick = useSelector(getTick)
 
+  const frames = states[state]
   const [frame, setFrame] = useState(0)
   const [cell, setCell] = useState(frames[frame])
 
   const counter = useRef(0)
-
   useEffect(() => {
     counter.current++
     if (counter.current === speed) {
@@ -33,32 +31,29 @@ function AnimatedSprite({
   useEffect(() => {
     if (frame === frames.length) {
       setFrame(0)
-      if (!repeat) {
-        onAnimationEnd()
-      }
+      onAnimationEnd()
     }
     setCell(frames[frame])
-  }, [repeat, frames, frame, onAnimationEnd])
+  }, [frame, frames, onAnimationEnd])
 
   return <Sprite {...rest} cell={cell} />
 }
 
 AnimatedSprite.propTypes = {
   ...Sprite.propTypes,
-  states: PropTypes.objectOf(
-    PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number))
-  ).isRequired,
   speed: PropTypes.number.isRequired,
+  states: PropTypes.shape({
+    frames: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+    next: PropTypes.string,
+  }).isRequired,
   state: PropTypes.string.isRequired,
-  repeat: PropTypes.bool.isRequired,
   onAnimationEnd: PropTypes.func.isRequired,
 }
 
 AnimatedSprite.defaultProps = {
   ...Sprite.defaultProps,
-  states: {},
   speed: 10,
-  repeat: false,
+  states: {},
   onAnimationEnd: () => {},
 }
 

@@ -1,17 +1,19 @@
-import { KEY_PRESSED, MOVE } from 'store/actionTypes'
+import * as Types from 'store/actionTypes'
 import * as Vector from 'utils/vector'
 
 export default function neko(state = {}, action) {
   switch (action.type) {
-    case KEY_PRESSED:
+    case Types.KEY_PRESSED:
       const { keys, delta } = action.payload
 
       const velocity = updateVelocity(keys, state.state.speed, delta)
-      const animation = updateAnimation(velocity)
 
-      return { ...state, state: { ...state.state, velocity, animation } }
+      return {
+        ...state,
+        state: { ...state.state, velocity, id: updateState(velocity) },
+      }
 
-    case MOVE:
+    case Types.MOVE:
       const { direction, bounds } = action.payload
       direction.x = Vector.clamp(direction.x, bounds.x, bounds.width)
       direction.y = Vector.clamp(direction.y, bounds.y, bounds.height)
@@ -44,29 +46,24 @@ function updateVelocity(keys, speed, delta) {
   return velocity
 }
 
-function updateAnimation(velocity) {
+function updateState(velocity) {
   if (!velocity.x && !velocity.y) {
-    return { state: 'idle' }
+    return 'idle'
   }
 
   const angle = Vector.angle(velocity)
-  const animation = {}
 
   if (Math.abs(angle) > Math.PI / 3 && Math.abs(angle) < (Math.PI * 2) / 3) {
-    animation.state = angle > 0 ? 'down' : 'up'
-  } else if (
+    return angle > 0 ? 'down' : 'up'
+  }
+
+  if (
     (Math.abs(angle) >= Math.PI / 6 && Math.abs(angle) <= Math.PI / 3) ||
     (Math.abs(angle) >= (Math.PI * 2) / 3 &&
       Math.abs(angle) <= (Math.PI * 5) / 6)
   ) {
-    animation.state = angle > 0 ? 'rightDown' : 'rightUp'
-  } else {
-    animation.state = 'right'
+    return angle > 0 ? 'rightDown' : 'rightUp'
   }
 
-  if (velocity.x < 0) {
-    animation.flip = 'h'
-  }
-
-  return animation
+  return 'right'
 }

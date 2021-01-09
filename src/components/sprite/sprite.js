@@ -7,8 +7,8 @@ function Sprite({
   rows,
   cols,
   scale,
-  cell,
   flip,
+  cell,
   children,
 }) {
   const cellWidth = width / cols
@@ -41,8 +41,8 @@ Sprite.propTypes = {
   rows: PropTypes.number.isRequired,
   cols: PropTypes.number.isRequired,
   scale: PropTypes.number.isRequired,
+  flip: PropTypes.string.isRequired,
   cell: PropTypes.arrayOf(PropTypes.number).isRequired,
-  flip: PropTypes.string,
 }
 
 Sprite.defaultProps = {

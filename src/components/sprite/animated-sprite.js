@@ -1,7 +1,6 @@
+import { useCounter } from 'components/hooks/useCounter'
 import PropTypes from 'prop-types'
-import { useEffect, useRef, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { getTick } from 'store/reducers'
+import { useEffect, useState } from 'react'
 
 import Sprite from './sprite'
 
@@ -13,21 +12,12 @@ function AnimatedSprite({
   onAnimationEnd,
   ...rest
 }) {
-  const tick = useSelector(getTick)
-
   const frames = states[status]
   const [frame, setFrame] = useState(0)
+  const updateFrame = () => setFrame((frame) => frame + 1)
+  useCounter(speed, updateFrame)
+
   const [cell, setCell] = useState(frames[frame])
-
-  const counter = useRef(0)
-  useEffect(() => {
-    counter.current++
-    if (counter.current === speed) {
-      setFrame((frame) => frame + 1)
-      counter.current = 0
-    }
-  }, [speed, tick])
-
   useEffect(() => {
     if (frame === frames.length) {
       setFrame(0)

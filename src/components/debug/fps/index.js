@@ -1,21 +1,18 @@
-import PropTypes from 'prop-types'
+import { useCounter } from 'components/hooks/useCounter'
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { getTick } from 'store/reducers'
+import { getDebug } from 'store/reducers'
 
 import classes from './fps.module.css'
 
 function Fps() {
-  const { fps } = useSelector(getTick)
+  const { fps: fpsConfig } = useSelector(getDebug)
+  const [fps, setFps] = useState(0)
+  const updateFps = ({ fps }) => setFps(fps)
+
+  useCounter(fpsConfig.frequency, updateFps)
 
   return <div className={classes.fps}>{`${Math.round(fps)} FPS`}</div>
-}
-
-Fps.propTypes = {
-  delta: PropTypes.number.isRequired,
-}
-
-Fps.defaultProps = {
-  delta: 0,
 }
 
 export default Fps

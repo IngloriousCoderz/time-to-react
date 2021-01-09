@@ -8,6 +8,7 @@ import physics from './physics'
 import stage from './stage'
 import tick from './tick'
 
+export const getDebug = ({ debug }) => debug
 export const getStage = ({ stage }) => stage
 export const getPhysics = ({ physics }) => physics
 export const getTick = ({ tick }) => tick

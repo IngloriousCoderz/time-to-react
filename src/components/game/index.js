@@ -34,8 +34,8 @@ function Game() {
             </Body>
           ))}
         </World>
-        {debug.showFps && <Fps />}
-        {debug.showKeys && <Keys />}
+        {debug.fps.show && <Fps />}
+        {debug.keys.show && <Keys />}
       </Stage>
     </Provider>
   )

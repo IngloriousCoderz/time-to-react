@@ -26,12 +26,7 @@ export function addBody(body, listeners) {
     ? engine.bodies[engine.bodies.length - 1].id
     : 0
 
-  body = {
-    ...body,
-    id: maxId,
-    position: { x: 0, y: 0 },
-    listeners,
-  }
+  body = { ...body, id: maxId, listeners }
   engine.world.bodies.push(body)
 
   return body

@@ -12,12 +12,16 @@ export default function usePhysics(node) {
   const bounds = { x: 0, y: 0, width: stage.width, height: stage.height }
 
   const dispatch = useDispatch()
-  const body = useRef()
+  const body = useRef({
+    ...physics,
+    position: state.position,
+    velocity: state.velocity,
+  })
   const Physics = applyPhysics(config.type)
   useEffect(() => {
     const onUpdate = () => dispatch(move(node, body.current.position, bounds))
 
-    body.current = Physics.addBody(physics, { onUpdate })
+    body.current = Physics.addBody(body.current, { onUpdate })
 
     return () => Physics.removeBody(body.current, { onUpdate })
     // eslint-disable-next-line react-hooks/exhaustive-deps

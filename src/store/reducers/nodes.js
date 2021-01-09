@@ -1,17 +1,13 @@
-import { KEY_PRESSED, MOVE } from 'store/actionTypes'
+import { combineReducers } from 'redux'
 
-export function createNodesReducer(nodeReducers) {
-  return function nodes(state = {}, action) {
-    switch (action.type) {
-      case KEY_PRESSED:
-      case MOVE:
-        return Object.keys(state).reduce((acc, key) => {
-          acc[key] = nodeReducers[key](state[key], action)
-          return acc
-        }, {})
+import { createNodeReducer } from './node'
 
-      default:
-        return state
-    }
-  }
+export function createNodesReducer(reducers = {}) {
+  const nodesReducers = Object.keys(reducers).reduce((acc, node) => {
+    const nodeReducer = reducers[node]
+    acc[node] = createNodeReducer(nodeReducer)
+    return acc
+  }, {})
+
+  return combineReducers(nodesReducers)
 }

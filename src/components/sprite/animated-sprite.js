@@ -8,14 +8,14 @@ import Sprite from './sprite'
 function AnimatedSprite({
   states,
   speed,
-  state,
+  status,
   repeat,
   onAnimationEnd,
   ...rest
 }) {
   const tick = useSelector(getTick)
 
-  const frames = states[state]
+  const frames = states[status]
   const [frame, setFrame] = useState(0)
   const [cell, setCell] = useState(frames[frame])
 
@@ -46,7 +46,7 @@ AnimatedSprite.propTypes = {
     frames: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
     next: PropTypes.string,
   }).isRequired,
-  state: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
   onAnimationEnd: PropTypes.func.isRequired,
 }
 

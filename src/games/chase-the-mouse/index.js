@@ -1,10 +1,10 @@
 import config from './config.json'
 import component from './neko/component'
-import reducer from './neko/reducer'
+import * as nekoReducers from './neko/reducers'
 
 const game = {
   config,
-  reducers: { neko: reducer },
+  reducers: { neko: nekoReducers },
   components: { neko: component },
 }
 

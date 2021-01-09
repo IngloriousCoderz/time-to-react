@@ -1,7 +1,7 @@
 import AnimatedSprite from 'components/sprite/animated-sprite'
 
-function Neko({ state, sprite }) {
-  const { velocity, position } = state
+function Neko({ status, sprite }) {
+  const { velocity, position } = status
 
   const flip = velocity.x < 0 ? 'h' : ''
 
@@ -13,7 +13,7 @@ function Neko({ state, sprite }) {
 
   return (
     <div style={style}>
-      <AnimatedSprite {...sprite} state={state.id} flip={flip} />
+      <AnimatedSprite {...sprite} status={status.id} flip={flip} />
     </div>
   )
 }

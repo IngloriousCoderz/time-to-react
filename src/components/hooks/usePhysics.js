@@ -7,15 +7,15 @@ import { applyPhysics } from 'utils/physics'
 export default function usePhysics(node) {
   const config = useSelector(getPhysics)
   const stage = useSelector(getStage)
-  const { physics, state } = useSelector(getNode(node))
+  const { physics, status } = useSelector(getNode(node))
 
   const bounds = { x: 0, y: 0, width: stage.width, height: stage.height }
 
   const dispatch = useDispatch()
   const body = useRef({
     ...physics,
-    position: state.position,
-    velocity: state.velocity,
+    position: status.position,
+    velocity: status.velocity,
   })
   const Physics = applyPhysics(config.type)
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function usePhysics(node) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const { velocity } = state
+  const { velocity } = status
   useEffect(() => {
     Physics.setVelocity(body.current, velocity)
   }, [velocity, Physics])

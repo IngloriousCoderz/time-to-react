@@ -15,8 +15,8 @@ export const getAllowedKeys = ({ input }) => input.allowedKeys
 export const getKeys = ({ input }) => input.keys
 export const getNode = (node) => ({ nodes }) => nodes[node]
 
-export function createRootReducer(nodeReducers) {
-  const nodes = createNodesReducer(nodeReducers)
+export function createRootReducer(reducers) {
+  const nodes = createNodesReducer(reducers)
   const combinedReducer = combineReducers({
     debug,
     stage,

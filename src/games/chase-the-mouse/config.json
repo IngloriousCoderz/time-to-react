@@ -31,7 +31,7 @@
       "id": "neko",
       "type": "Neko",
 
-      "state": {
+      "status": {
         "id": "idle",
         "speed": 400,
         "position": {

@@ -1,4 +1,4 @@
-import 'assets/reset.css'
+import 'assets/style.css'
 
 import Game from 'components/game'
 import React from 'react'

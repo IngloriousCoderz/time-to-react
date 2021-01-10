@@ -2,15 +2,15 @@ import { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { getTick } from 'store/reducers'
 
-export function useCounter(speed, callback) {
+export function useCounter(speed, callback, start = speed) {
   const tick = useSelector(getTick)
-  const counter = useRef(0)
+  const counter = useRef(start)
 
   useEffect(() => {
-    counter.current++
     if (counter.current === speed) {
-      counter.current = 0
       callback(tick)
+      counter.current = 0
     }
+    counter.current++
   }, [tick, speed, callback])
 }

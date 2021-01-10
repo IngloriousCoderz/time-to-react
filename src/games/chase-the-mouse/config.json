@@ -18,7 +18,7 @@
   },
 
   "input": {
-    "allowedKeys": ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", " "],
+    "allowedKeys": ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"],
     "keys": {}
   },
 
@@ -40,7 +40,6 @@
       },
 
       "sprite": {
-        "sheet": "sprites/neko.png",
         "width": 192,
         "height": 192,
         "rows": 6,

@@ -1,21 +1,18 @@
+import { useResizeListener } from 'components/hooks/useResizeListener'
 import PropTypes from 'prop-types'
 
-import useWindowSize from '../hooks/useWindowSize'
 import classes from './stage.module.css'
 
 function Stage({ width, height, background, children }) {
-  const scale = useWindowSize(width, height)
+  const { ref, transform } = useResizeListener(width, height)
 
-  const style = {
-    width,
-    height,
-    background,
-    transform: `scale(${scale})`,
-  }
+  const style = { width, height, background, transform }
 
   return (
-    <div className={classes.stage} style={style}>
-      {children}
+    <div className={classes.wrapper} ref={ref}>
+      <div className={classes.stage} style={style}>
+        {children}
+      </div>
     </div>
   )
 }

@@ -2,7 +2,7 @@ import AnimatedSprite from 'components/sprite/animated-sprite'
 
 import sheet from './sprite.png'
 
-function Neko({ status, sprite }) {
+function Character({ status, sprite }) {
   const { id, velocity, position } = status
 
   const flip = velocity.x < 0 ? 'h' : ''
@@ -20,4 +20,4 @@ function Neko({ status, sprite }) {
   )
 }
 
-export default Neko
+export default Character

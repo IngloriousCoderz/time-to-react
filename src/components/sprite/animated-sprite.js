@@ -15,7 +15,7 @@ function AnimatedSprite({
   const frames = states[status]
   const [frame, setFrame] = useState(0)
   const updateFrame = () => setFrame((frame) => frame + 1)
-  useCounter(speed, updateFrame)
+  useCounter(speed, updateFrame, 0)
 
   const [cell, setCell] = useState(frames[frame])
   useEffect(() => {

@@ -19,7 +19,7 @@ function AnimatedSprite({
 
   const [cell, setCell] = useState(frames[frame])
   useEffect(() => {
-    if (frame === frames.length) {
+    if (frame >= frames.length) {
       setFrame(0)
       onAnimationEnd()
     }

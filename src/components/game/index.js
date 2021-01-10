@@ -13,13 +13,17 @@ import Keys from '../debug/keys'
 import Stage from '../stage'
 import World from '../world'
 
-const { default: game } = require('games/chase-the-mouse')
+const { default: game } = require('games/rgk-demo')
 
 const initialState = setupState(game)
 const store = setupStore(game.reducers, initialState)
 
 store.dispatch(startLoop())
 store.dispatch(startListening())
+
+if (process.env.NODE_ENV === 'development') {
+  window.store = store
+}
 
 function Game() {
   const { stage, nodes, debug } = game.config

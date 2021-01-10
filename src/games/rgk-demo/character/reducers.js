@@ -31,12 +31,7 @@ function updateVelocity(keys, speed, delta) {
   if (keys.ArrowLeft) {
     velocity.x -= 1
   }
-  //   if (keys.ArrowDown) {
-  //     velocity.y += 1
-  //   }
-  //   if (keys.ArrowUp) {
-  //     velocity.y -= 1
-  //   }
+
   velocity = Vector.normalize(velocity)
   velocity = Vector.mult(velocity, speed)
   velocity = Vector.mult(velocity, delta)
@@ -49,18 +44,8 @@ function updateStateId(velocity) {
     return 'idle'
   }
 
-  const angle = Vector.angle(velocity)
-
-  if (Math.abs(angle) > Math.PI / 3 && Math.abs(angle) < (Math.PI * 2) / 3) {
-    return angle > 0 ? 'down' : 'up'
-  }
-
-  if (
-    (Math.abs(angle) >= Math.PI / 6 && Math.abs(angle) <= Math.PI / 3) ||
-    (Math.abs(angle) >= (Math.PI * 2) / 3 &&
-      Math.abs(angle) <= (Math.PI * 5) / 6)
-  ) {
-    return angle > 0 ? 'rightDown' : 'rightUp'
+  if (velocity.y !== 0) {
+    return 'jumping'
   }
 
   return 'right'

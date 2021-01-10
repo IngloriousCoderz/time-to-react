@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux'
 import { getKeys } from 'store/reducers'
 
+import Key from './key'
 import classes from './keys.module.css'
 
 function Keys() {
@@ -11,130 +12,113 @@ function Keys() {
   return (
     <div className={classes.keys}>
       <div className={classes.row}>
-        <div className={[classes.key, classes.top].join(' ')}>Esc</div>
-        <div className={[classes.key, classes.top].join(' ')}>F1</div>
-        <div className={[classes.key, classes.top].join(' ')}>F2</div>
-        <div className={[classes.key, classes.top].join(' ')}>F3</div>
-        <div className={[classes.key, classes.top].join(' ')}>F4</div>
-        <div className={[classes.key, classes.top].join(' ')}>F5</div>
-        <div className={[classes.key, classes.top].join(' ')}>F6</div>
-        <div className={[classes.key, classes.top].join(' ')}>F7</div>
-        <div className={[classes.key, classes.top].join(' ')}>F8</div>
-        <div className={[classes.key, classes.top].join(' ')}>F9</div>
-        <div className={[classes.key, classes.top].join(' ')}>F10</div>
-        <div className={[classes.key, classes.top].join(' ')}>F11</div>
-        <div className={[classes.key, classes.top].join(' ')}>F12</div>
-        <div className={[classes.key, classes.top].join(' ')}>Print</div>
-        <div className={[classes.key, classes.top].join(' ')}>Ins</div>
-        <div className={[classes.key, classes.top].join(' ')}>Del</div>
+        <Key id="Escape" label="Esc" className="top" />
+        <Key id="F1" label="F1" className="top" />
+        <Key id="F2" label="F2" className="top" />
+        <Key id="F3" label="F3" className="top" />
+        <Key id="F4" label="F4" className="top" />
+        <Key id="F5" label="F5" className="top" />
+        <Key id="F6" label="F6" className="top" />
+        <Key id="F7" label="F7" className="top" />
+        <Key id="F8" label="F8" className="top" />
+        <Key id="F9" label="F9" className="top" />
+        <Key id="F10" label="F10" className="top" />
+        <Key id="F11" label="F11" className="top" />
+        <Key id="F12" label="F12" className="top" />
+        <Key id="Print" label="Print" className="top" />
+        <Key id="Ins" label="Ins" className="top" />
+        <Key id="Del" label="Del" className="top" />
       </div>
 
       <div className={classes.row}>
-        <div className={[classes.key].join(' ')}>\</div>
-        <div className={[classes.key].join(' ')}>1</div>
-        <div className={[classes.key].join(' ')}>2</div>
-        <div className={[classes.key].join(' ')}>3</div>
-        <div className={[classes.key].join(' ')}>4</div>
-        <div className={[classes.key].join(' ')}>5</div>
-        <div className={[classes.key].join(' ')}>6</div>
-        <div className={[classes.key].join(' ')}>7</div>
-        <div className={[classes.key].join(' ')}>8</div>
-        <div className={[classes.key].join(' ')}>9</div>
-        <div className={[classes.key].join(' ')}>0</div>
-        <div className={[classes.key].join(' ')}>'</div>
-        <div className={[classes.key].join(' ')}>ì</div>
-        <div className={[classes.key, classes.backspace].join(' ')}>←</div>
+        <Key id="\" label="\" />
+        <Key id="1" label="1" />
+        <Key id="2" label="2" />
+        <Key id="3" label="3" />
+        <Key id="4" label="4" />
+        <Key id="5" label="5" />
+        <Key id="6" label="6" />
+        <Key id="7" label="7" />
+        <Key id="8" label="8" />
+        <Key id="9" label="9" />
+        <Key id="0" label="0" />
+        <Key id="'" label="'" />
+        <Key id="ì" label="ì" />
+        <Key id="Backspace" label="←" className="backspace" />
       </div>
 
       <div className={classes.row}>
-        <div className={[classes.key, classes.tab].join(' ')}>↹</div>
-        <div className={[classes.key].join(' ')}>Q</div>
-        <div className={[classes.key].join(' ')}>W</div>
-        <div className={[classes.key].join(' ')}>E</div>
-        <div className={[classes.key].join(' ')}>R</div>
-        <div className={[classes.key].join(' ')}>T</div>
-        <div className={[classes.key].join(' ')}>Y</div>
-        <div className={[classes.key].join(' ')}>U</div>
-        <div className={[classes.key].join(' ')}>I</div>
-        <div className={[classes.key].join(' ')}>O</div>
-        <div className={[classes.key].join(' ')}>P</div>
-        <div className={[classes.key].join(' ')}>è</div>
-        <div className={[classes.key].join(' ')}>+</div>
-        <div className={[classes.key].join(' ')}>⏎</div>
+        {/* keyCode === 9 */}
+        <Key id="Tab" label="↹" className="tab" />
+        <Key id="Q" label="Q" />
+        <Key id="W" label="W" />
+        <Key id="E" label="E" />
+        <Key id="R" label="R" />
+        <Key id="T" label="T" />
+        <Key id="Y" label="Y" />
+        <Key id="U" label="U" />
+        <Key id="I" label="I" />
+        <Key id="O" label="O" />
+        <Key id="P" label="P" />
+        <Key id="è" label="è" />
+        <Key id="+" label="+" />
+        <Key id="⏎" label="⏎" />
       </div>
 
       <div className={classes.row}>
-        <div className={[classes.key, classes.capsLock].join(' ')}>⇪</div>
-        <div className={[classes.key].join(' ')}>A</div>
-        <div className={[classes.key].join(' ')}>S</div>
-        <div className={[classes.key].join(' ')}>D</div>
-        <div className={[classes.key].join(' ')}>F</div>
-        <div className={[classes.key].join(' ')}>G</div>
-        <div className={[classes.key].join(' ')}>H</div>
-        <div className={[classes.key].join(' ')}>J</div>
-        <div className={[classes.key].join(' ')}>K</div>
-        <div className={[classes.key].join(' ')}>L</div>
-        <div className={[classes.key].join(' ')}>ò</div>
-        <div className={[classes.key].join(' ')}>à</div>
-        <div className={[classes.key].join(' ')}>ù</div>
-        <div className={[classes.key, classes.empty].join(' ')}></div>
+        <Key id="CapsLock" label="⇪" className="capsLock" />
+        <Key id="A" label="A" />
+        <Key id="S" label="S" />
+        <Key id="D" label="D" />
+        <Key id="F" label="F" />
+        <Key id="G" label="G" />
+        <Key id="H" label="H" />
+        <Key id="J" label="J" />
+        <Key id="K" label="K" />
+        <Key id="L" label="L" />
+        <Key id="ò" label="ò" />
+        <Key id="à" label="à" />
+        <Key id="ù" label="ù" />
+        <Key id="" label="" className="empty" />
       </div>
 
       <div className={classes.row}>
-        <div className={[classes.key, classes.leftShift].join(' ')}>⇧</div>
-        <div className={[classes.key].join(' ')}>&lt;</div>
-        <div className={[classes.key].join(' ')}>Z</div>
-        <div className={[classes.key].join(' ')}>X</div>
-        <div className={[classes.key].join(' ')}>C</div>
-        <div className={[classes.key].join(' ')}>V</div>
-        <div className={[classes.key].join(' ')}>B</div>
-        <div className={[classes.key].join(' ')}>N</div>
-        <div className={[classes.key].join(' ')}>M</div>
-        <div className={[classes.key].join(' ')}>,</div>
-        <div className={[classes.key].join(' ')}>.</div>
-        <div className={[classes.key].join(' ')}>-</div>
-        <div className={[classes.key, classes.rightShift].join(' ')}>⇧</div>
+        <Key id="Shift" label="⇧" className="leftShift" />
+        <Key id="&lt;" label="&lt;" />
+        <Key id="Z" label="Z" />
+        <Key id="X" label="X" />
+        <Key id="C" label="C" />
+        <Key id="V" label="V" />
+        <Key id="B" label="B" />
+        <Key id="N" label="N" />
+        <Key id="M" label="M" />
+        <Key id="," label="," />
+        <Key id="." label="." />
+        <Key id="-" label="-" />
+        <Key id="Shift" label="⇧" className="rightShift" />
       </div>
 
       <div className={classes.row}>
-        <div className={[classes.key, classes.leftCtrl].join(' ')}>Ctrl</div>
-        <div className={[classes.key].join(' ')}>Fn</div>
-        <div className={[classes.key].join(' ')}>Opt</div>
-        <div className={[classes.key].join(' ')}>Alt</div>
+        {/* event.ctrlKey &&  event.location == 1 */}
+        <Key id="ctrlKey" label="Ctrl" className="leftCtrl" />
+        {/* not detectable by itself */}
+        <Key id="functionKey" label="Fn" />
+        {/* event.metaKey === true */}
+        <Key id="optKey" label="Opt" />
+        {/* event.altKey === true */}
+        <Key id="altKey" label="Alt" />
 
-        <div
-          className={[classes.key, classes.spacebar].join(' ')}
-          style={{ filter: rest[' '] && 'brightness(100%)' }}
-        ></div>
-
-        <div className={[classes.key].join(' ')}>Alt Gr</div>
-        <div className={[classes.key].join(' ')}>Ctrl</div>
+        <Key id=" " label="" className="spacebar" />
+        {/* event.ctrlKey && event.altKey */}
+        <Key id="altGraphKey" label="Alt Gr" />
+        {/* event.ctrlKey &&  event.location == 2 */}
+        <Key id="ctrlKey" label="Ctrl" />
 
         <div className={classes.arrowKeys}>
-          <div
-            className={[classes.key, classes.arrowKey, classes.up].join(' ')}
-            style={{ filter: ArrowUp && 'brightness(100%)' }}
-          >
-            ▲
-          </div>
-          <div
-            className={[classes.key, classes.arrowKey, classes.left].join(' ')}
-            style={{ filter: ArrowLeft && 'brightness(100%)' }}
-          >
-            ◀
-          </div>
-          <div
-            className={[classes.key, classes.arrowKey, classes.down].join(' ')}
-            style={{ filter: ArrowDown && 'brightness(100%)' }}
-          >
-            ▼
-          </div>
-          <div
-            className={[classes.key, classes.arrowKey, classes.right].join(' ')}
-            style={{ filter: ArrowRight && 'brightness(100%)' }}
-          >
-            ▶
-          </div>
+          <Key id="ArrowUp" label="▲" className="arrowKey up" />
+          <Key id="ArrowLeft" label="◀" className="arrowKey left" />
+          <Key id="ArrowDown" label="▼" className="arrowKey down" />
+          <Key id="ArrowRight" label="▶" className="arrowKey right" />
         </div>
       </div>
     </div>

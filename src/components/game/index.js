@@ -12,37 +12,38 @@ import Keyboard from '../debug/keyboard'
 import Stage from '../stage'
 import World from '../world'
 
-const { default: game } = require('games/chase-the-mouse')
-// const { default: game } = require('games/rgk-demo')
+export async function createGame(name) {
+  const { default: game } = await import(`../../${name}`)
 
-const initialState = setupState(game)
-const store = setupStore(game.reducers, initialState)
+  const initialState = setupState(game)
+  const store = setupStore(game.reducers, initialState)
 
-store.dispatch(startLoop())
-store.dispatch(startListening())
+  store.dispatch(startLoop())
+  store.dispatch(startListening())
 
-if (process.env.NODE_ENV === 'development') {
-  window.store = store
+  if (process.env.NODE_ENV === 'development') {
+    window.store = store
+  }
+
+  function Game() {
+    const { stage, scene, debug } = game.config
+
+    return (
+      <Provider store={store}>
+        <Stage {...stage}>
+          <World>
+            <Scene scene={scene} />
+          </World>
+
+          {debug.fps.show && <Fps />}
+          {debug.keys.show && <Keyboard />}
+        </Stage>
+      </Provider>
+    )
+  }
+
+  return Game
 }
-
-function Game() {
-  const { stage, scene, debug } = game.config
-
-  return (
-    <Provider store={store}>
-      <Stage {...stage}>
-        <World>
-          <Scene scene={scene} />
-        </World>
-
-        {debug.fps.show && <Fps />}
-        {debug.keys.show && <Keyboard />}
-      </Stage>
-    </Provider>
-  )
-}
-
-export default Game
 
 function setupState({ config }) {
   return {

@@ -1,14 +1,7 @@
-import { useSelector } from 'react-redux'
-import { getKeys } from 'store/reducers'
-
 import Key from './key'
-import classes from './keys.module.css'
+import classes from './keyboard.module.css'
 
-function Keys() {
-  const { ArrowUp, ArrowLeft, ArrowDown, ArrowRight, ...rest } = useSelector(
-    getKeys
-  )
-
+function Keyboard() {
   return (
     <div className={classes.keys}>
       <div className={classes.row}>
@@ -50,16 +43,16 @@ function Keys() {
       <div className={classes.row}>
         {/* keyCode === 9 */}
         <Key id="Tab" label="↹" className="tab" />
-        <Key id="Q" label="Q" />
-        <Key id="W" label="W" />
-        <Key id="E" label="E" />
-        <Key id="R" label="R" />
-        <Key id="T" label="T" />
-        <Key id="Y" label="Y" />
-        <Key id="U" label="U" />
-        <Key id="I" label="I" />
-        <Key id="O" label="O" />
-        <Key id="P" label="P" />
+        <Key id="q" label="Q" />
+        <Key id="w" label="W" />
+        <Key id="e" label="E" />
+        <Key id="r" label="R" />
+        <Key id="t" label="T" />
+        <Key id="y" label="Y" />
+        <Key id="u" label="U" />
+        <Key id="i" label="I" />
+        <Key id="o" label="O" />
+        <Key id="p" label="P" />
         <Key id="è" label="è" />
         <Key id="+" label="+" />
         <Key id="⏎" label="⏎" />
@@ -67,15 +60,15 @@ function Keys() {
 
       <div className={classes.row}>
         <Key id="CapsLock" label="⇪" className="capsLock" />
-        <Key id="A" label="A" />
-        <Key id="S" label="S" />
-        <Key id="D" label="D" />
-        <Key id="F" label="F" />
-        <Key id="G" label="G" />
-        <Key id="H" label="H" />
-        <Key id="J" label="J" />
-        <Key id="K" label="K" />
-        <Key id="L" label="L" />
+        <Key id="a" label="A" />
+        <Key id="s" label="S" />
+        <Key id="d" label="D" />
+        <Key id="f" label="F" />
+        <Key id="g" label="G" />
+        <Key id="h" label="H" />
+        <Key id="j" label="J" />
+        <Key id="k" label="K" />
+        <Key id="l" label="L" />
         <Key id="ò" label="ò" />
         <Key id="à" label="à" />
         <Key id="ù" label="ù" />
@@ -85,13 +78,13 @@ function Keys() {
       <div className={classes.row}>
         <Key id="Shift" label="⇧" className="leftShift" />
         <Key id="&lt;" label="&lt;" />
-        <Key id="Z" label="Z" />
-        <Key id="X" label="X" />
-        <Key id="C" label="C" />
-        <Key id="V" label="V" />
-        <Key id="B" label="B" />
-        <Key id="N" label="N" />
-        <Key id="M" label="M" />
+        <Key id="z" label="Z" />
+        <Key id="x" label="X" />
+        <Key id="c" label="C" />
+        <Key id="v" label="V" />
+        <Key id="b" label="B" />
+        <Key id="n" label="N" />
+        <Key id="m" label="M" />
         <Key id="," label="," />
         <Key id="." label="." />
         <Key id="-" label="-" />
@@ -125,4 +118,4 @@ function Keys() {
   )
 }
 
-export default Keys
+export default Keyboard

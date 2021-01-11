@@ -1,4 +1,5 @@
 import usePhysics from 'components/hooks/usePhysics'
+import { memo } from 'react'
 
 function Body({ node, children }) {
   usePhysics(node)
@@ -6,4 +7,4 @@ function Body({ node, children }) {
   return children
 }
 
-export default Body
+export default memo(Body)

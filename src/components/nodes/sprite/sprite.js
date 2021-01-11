@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import { memo } from 'react'
 
 function Sprite({
   sheet,
@@ -53,4 +54,4 @@ Sprite.defaultProps = {
   flip: '',
 }
 
-export default Sprite
+export default memo(Sprite)

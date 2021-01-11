@@ -6,10 +6,15 @@ export function status(state = {}, action) {
     case Types.KEY_PRESSED:
       const { keys, delta } = action.payload
 
-      const velocity = updateVelocity(keys, state.speed, delta)
-      const stateId = updateStateId(velocity)
+      if (keys.a) {
+        return { ...state, id: 'punching' }
+      }
 
-      return { ...state, velocity, id: stateId }
+      const force = updateForce(keys, state.speed, delta)
+      const velocity = updateVelocity(keys, state.speed, delta)
+      const sprite = updateSprite(velocity)
+
+      return { ...state, force, velocity, ...sprite }
 
     case Types.MOVE:
       const { direction, bounds } = action.payload
@@ -22,6 +27,14 @@ export function status(state = {}, action) {
   }
 }
 
+function updateForce(keys, speed, delta) {
+  if (keys.a) {
+    return { x: 0, y: -0.15 }
+  }
+
+  return null
+}
+
 function updateVelocity(keys, speed, delta) {
   let velocity = { x: 0, y: 0 }
 
@@ -31,12 +44,7 @@ function updateVelocity(keys, speed, delta) {
   if (keys.ArrowLeft) {
     velocity.x -= 1
   }
-  if (keys.ArrowDown) {
-    velocity.y += 1
-  }
-  if (keys.ArrowUp) {
-    velocity.y -= 1
-  }
+
   velocity = Vector.normalize(velocity)
   velocity = Vector.mult(velocity, speed)
   velocity = Vector.mult(velocity, delta)
@@ -44,23 +52,20 @@ function updateVelocity(keys, speed, delta) {
   return velocity
 }
 
+function updateSprite(velocity) {
+  const id = updateStateId(velocity)
+  const flip = velocity.x < 0 ? 'h' : ''
+
+  return { id, flip }
+}
+
 function updateStateId(velocity) {
   if (!velocity.x && !velocity.y) {
     return 'idle'
   }
 
-  const angle = Vector.angle(velocity)
-
-  if (Math.abs(angle) > Math.PI / 3 && Math.abs(angle) < (Math.PI * 2) / 3) {
-    return angle > 0 ? 'down' : 'up'
-  }
-
-  if (
-    (Math.abs(angle) >= Math.PI / 6 && Math.abs(angle) <= Math.PI / 3) ||
-    (Math.abs(angle) >= (Math.PI * 2) / 3 &&
-      Math.abs(angle) <= (Math.PI * 5) / 6)
-  ) {
-    return angle > 0 ? 'rightDown' : 'rightUp'
+  if (velocity.y !== 0) {
+    return 'jumping'
   }
 
   return 'right'

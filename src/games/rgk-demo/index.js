@@ -1,11 +1,9 @@
-import characterComponent from './character/component'
-import * as characterReducers from './character/reducers'
-import config from './config.json'
+import * as characterReducers from './character'
+import { config } from './config'
 
 const game = {
   config,
   reducers: { character: characterReducers },
-  components: { character: characterComponent },
 }
 
 export default game

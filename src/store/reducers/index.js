@@ -5,6 +5,7 @@ import debug from './debug'
 import input from './input'
 import { createNodesReducer } from './nodes'
 import physics from './physics'
+import scene from './scene'
 import stage from './stage'
 import tick from './tick'
 
@@ -24,6 +25,7 @@ export function createRootReducer(reducers) {
     physics,
     tick,
     input,
+    scene,
     nodes,
   })
 

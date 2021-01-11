@@ -29,15 +29,26 @@ export const config = {
     keys: {},
   },
 
-  // layout: {
-  //   id: 'neko',
-  //   children: [],
-  // },
+  scene: {
+    id: 'neko',
+    type: 'Area2D',
+    children: [
+      {
+        id: 'body',
+        type: 'Body',
+        children: [
+          {
+            id: 'sprite',
+            type: 'AnimatedSprite',
+          },
+        ],
+      },
+    ],
+  },
 
   nodes: [
     {
       id: 'neko',
-      type: 'Neko',
 
       status: {
         id: 'idle',
@@ -55,6 +66,7 @@ export const config = {
       },
 
       sprite: {
+        sheet: 'games/chase-the-mouse/neko/sprite.png',
         width: NEKO_WIDTH * 6,
         height: NEKO_HEIGHT * 6,
         rows: 6,

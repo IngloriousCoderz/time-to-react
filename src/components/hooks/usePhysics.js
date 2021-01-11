@@ -14,6 +14,7 @@ export default function usePhysics(node) {
   const dispatch = useDispatch()
   const body = useRef({
     ...physics,
+    force: status.force || {},
     position: status.position,
     velocity: status.velocity,
   })

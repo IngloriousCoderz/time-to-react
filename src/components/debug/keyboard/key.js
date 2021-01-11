@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { getAllowedKeys, getKeys } from 'store/reducers'
 
-import classes from './keys.module.css'
+import classes from './keyboard.module.css'
 
 function Key({ id, label, className }) {
   const allowedKeys = useSelector(getAllowedKeys)
@@ -21,7 +21,7 @@ function Key({ id, label, className }) {
 Key.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string,
-  className: PropTypes.string.isRequired,
+  className: PropTypes.string,
 }
 
 Key.defaultValues = {

@@ -1,5 +1,4 @@
-import Body from 'components/body'
-import Node from 'components/node'
+import Scene from 'components/scene'
 import { Provider } from 'react-redux'
 import { applyMiddleware, compose, createStore } from 'redux'
 import thunk from 'redux-thunk'
@@ -9,11 +8,12 @@ import { startListening } from 'store/thunks/input'
 import { startLoop } from 'store/thunks/loop'
 
 import Fps from '../debug/fps'
-import Keys from '../debug/keys'
+import Keyboard from '../debug/keyboard'
 import Stage from '../stage'
 import World from '../world'
 
-const { default: game } = require('games/rgk-demo')
+const { default: game } = require('games/chase-the-mouse')
+// const { default: game } = require('games/rgk-demo')
 
 const initialState = setupState(game)
 const store = setupStore(game.reducers, initialState)
@@ -26,20 +26,17 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 function Game() {
-  const { stage, nodes, debug } = game.config
+  const { stage, scene, debug } = game.config
 
   return (
     <Provider store={store}>
       <Stage {...stage}>
         <World>
-          {nodes.map((node) => (
-            <Body key={node.id} node={node.id}>
-              <Node {...node} component={game.components[node.id]} />
-            </Body>
-          ))}
+          <Scene scene={scene} />
         </World>
+
         {debug.fps.show && <Fps />}
-        {debug.keys.show && <Keys />}
+        {debug.keys.show && <Keyboard />}
       </Stage>
     </Provider>
   )

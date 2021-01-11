@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import { MOVE } from 'store/actionTypes'
 
 import { createNodeReducer } from './node'
 
@@ -9,5 +10,19 @@ export function createNodesReducer(reducers = {}) {
     return acc
   }, {})
 
-  return combineReducers(nodesReducers)
+  const combinedReducer = combineReducers(nodesReducers)
+
+  return function nodes(state = {}, action) {
+    switch (action.type) {
+      case MOVE:
+        const { node } = action.payload
+        return {
+          ...state,
+          [node]: nodesReducers[node](state[node], action),
+        }
+
+      default:
+        return combinedReducer(state, action)
+    }
+  }
 }

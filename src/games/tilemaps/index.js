@@ -1,9 +1,9 @@
 import { config } from './config'
-import * as neko from './neko'
+import * as level from './level'
 
 const game = {
   config,
-  reducers: { neko },
+  reducers: { level },
 }
 
 export default game

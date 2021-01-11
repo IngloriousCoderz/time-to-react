@@ -1,4 +1,4 @@
-import Scene from 'components/scene'
+import Node from 'components/nodes/node'
 import { Provider } from 'react-redux'
 import { applyMiddleware, compose, createStore } from 'redux'
 import thunk from 'redux-thunk'
@@ -13,7 +13,7 @@ import Stage from '../stage'
 import World from '../world'
 
 export async function createGame(name) {
-  const { default: game } = await import(`../../${name}`)
+  const { default: game } = await import(`../../games/${name}`)
 
   const initialState = setupState(game)
   const store = setupStore(game.reducers, initialState)
@@ -32,7 +32,7 @@ export async function createGame(name) {
       <Provider store={store}>
         <Stage {...stage}>
           <World>
-            <Scene scene={scene} />
+            <Node node={scene.id} scene={scene} />
           </World>
 
           {debug.fps.show && <Fps />}

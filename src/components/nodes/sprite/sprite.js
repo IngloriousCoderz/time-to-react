@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import { memo } from 'react'
 
 function Sprite({
-  sheet,
+  src,
   width,
   height,
   rows,
@@ -26,7 +26,7 @@ function Sprite({
   const style = {
     width: `${cellWidth}px`,
     height: `${cellHeight}px`,
-    backgroundImage: `url(${sheet})`,
+    backgroundImage: `url(${src})`,
     backgroundRepeat: `no-repeat`,
     backgroundPosition: `-${cell[0] * cellWidth}px -${cell[1] * cellHeight}px`,
     transform,
@@ -36,7 +36,7 @@ function Sprite({
 }
 
 Sprite.propTypes = {
-  sheet: PropTypes.string.isRequired,
+  src: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   rows: PropTypes.number.isRequired,

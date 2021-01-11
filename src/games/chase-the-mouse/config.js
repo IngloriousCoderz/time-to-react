@@ -30,16 +30,22 @@ export const config = {
   },
 
   scene: {
-    id: 'neko',
-    type: 'Area2D',
+    id: 'scene',
+    type: 'Node',
     children: [
       {
-        id: 'body',
-        type: 'Body',
+        id: 'neko',
+        type: 'Area2D',
         children: [
           {
-            id: 'sprite',
-            type: 'AnimatedSprite',
+            id: 'body',
+            type: 'Body',
+            children: [
+              {
+                id: 'sprite',
+                type: 'AnimatedSprite',
+              },
+            ],
           },
         ],
       },
@@ -66,7 +72,7 @@ export const config = {
       },
 
       sprite: {
-        sheet: 'games/chase-the-mouse/neko/sprite.png',
+        src: 'games/chase-the-mouse/neko/sprite.png',
         width: NEKO_WIDTH * 6,
         height: NEKO_HEIGHT * 6,
         rows: 6,

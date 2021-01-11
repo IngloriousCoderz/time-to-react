@@ -1,3 +1,5 @@
+import { config as tilemapConfig } from '../tilemaps/config'
+
 const SPRITE_WIDTH = 64
 const SPRITE_HEIGHT = 64
 
@@ -8,14 +10,14 @@ export const config = {
   },
 
   stage: {
-    width: 1024,
-    height: 768,
-    background: '#c4c4c4',
+    width: 800,
+    height: 450,
+    background: 'rgb(58, 155, 220)',
   },
 
   physics: {
     type: 'matter-js',
-    world: { x: 0, y: 1, scale: 0.1 },
+    world: { gravity: { x: 0, y: 1, scale: 0.1 } },
   },
 
   input: {
@@ -24,16 +26,23 @@ export const config = {
   },
 
   scene: {
-    id: 'character',
-    type: 'Area2D',
+    id: 'scene',
+    type: 'Node',
     children: [
+      tilemapConfig.scene,
       {
         id: 'character',
-        type: 'Body',
+        type: 'Area2D',
         children: [
           {
-            id: 'character',
-            type: 'AnimatedSprite',
+            id: 'body',
+            type: 'Body',
+            children: [
+              {
+                id: 'sprite',
+                type: 'AnimatedSprite',
+              },
+            ],
           },
         ],
       },
@@ -41,13 +50,15 @@ export const config = {
   },
 
   nodes: [
+    ...tilemapConfig.nodes,
+
     {
       id: 'character',
 
       status: {
         id: 'idle',
         speed: 400,
-        position: { x: 0, y: 384 },
+        position: { x: 0, y: 300 },
         velocity: { x: 0, y: 0 },
       },
 
@@ -58,7 +69,7 @@ export const config = {
       },
 
       sprite: {
-        sheet: 'games/rgk-demo/character/sprite.png',
+        src: 'games/rgk-demo/character/sprite.png',
         width: SPRITE_WIDTH * 10,
         height: SPRITE_HEIGHT * 5,
         rows: 5,
@@ -98,10 +109,5 @@ export const config = {
         },
       },
     },
-
-    // {
-    //   id: 'buildings',
-    //   type: 'Tilemap',
-    // },
   ],
 }

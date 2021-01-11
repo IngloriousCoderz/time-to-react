@@ -6,7 +6,11 @@ import ReactDOM from 'react-dom'
 
 import reportWebVitals from './reportWebVitals'
 
-createGame(process.env.REACT_APP_GAME).then((Game) =>
+const game = window.location.search
+  ? window.location.search.split('=')[1]
+  : process.env.REACT_APP_GAME
+
+createGame(game).then((Game) =>
   ReactDOM.render(
     <React.StrictMode>
       <Game />

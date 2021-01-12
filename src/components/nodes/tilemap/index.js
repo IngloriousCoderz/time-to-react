@@ -1,6 +1,6 @@
 import { memo } from 'react'
 import { useSelector } from 'react-redux'
-import { getNode } from 'store/reducers'
+import { getNode } from 'store'
 
 import Layer from './layer'
 

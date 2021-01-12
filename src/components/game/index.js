@@ -1,9 +1,9 @@
+import { configureStore, createSlice } from '@reduxjs/toolkit'
 import Node from 'components/nodes/node'
 import { Provider } from 'react-redux'
-import { applyMiddleware, compose, createStore } from 'redux'
-import thunk from 'redux-thunk'
-import { MOVE, TICK } from 'store/actionTypes'
-import { createRootReducer } from 'store/reducers'
+import { createRootReducer } from 'store'
+import { tick } from 'store/frame'
+import { move } from 'store/nodes'
 import { startListening } from 'store/thunks/input'
 import { startLoop } from 'store/thunks/loop'
 
@@ -15,15 +15,20 @@ import World from '../world'
 export async function createGame(name) {
   const { default: game } = await import(`../../games/${name}`)
 
-  const initialState = setupState(game)
-  const store = setupStore(game.reducers, initialState)
+  // game.reducers = createReducers(game.reducers)
 
-  store.dispatch(startLoop())
-  store.dispatch(startListening())
+  const store = configureStore({
+    reducer: createRootReducer(game.reducers),
+    devTools: { actionsBlacklist: [tick, move] },
+    preloadedState: preloadState(game),
+  })
 
   if (process.env.NODE_ENV === 'development') {
     window.store = store
   }
+
+  store.dispatch(startLoop())
+  store.dispatch(startListening())
 
   function Game() {
     const { stage, scene, debug } = game.config
@@ -45,7 +50,23 @@ export async function createGame(name) {
   return Game
 }
 
-function setupState({ config }) {
+// function createReducers(nodeReducers) {
+//   return Object.keys(nodeReducers).reduce((acc, nodeName) => {
+//     const sliceReducers = nodeReducers[nodeName]
+//     acc[nodeName] = Object.keys(sliceReducers).reduce((acc, sliceName) => {
+//       const sliceReducer = sliceReducers[sliceName]
+//       acc[sliceName] = createSlice({
+//         name: sliceName,
+//         initialState: {},
+//         extraReducers: sliceReducer,
+//       })
+//       return acc
+//     }, {})
+//     return acc
+//   }, {})
+// }
+
+function preloadState({ config }) {
   return {
     ...config,
     nodes: config.nodes.reduce((acc, node) => {
@@ -56,23 +77,4 @@ function setupState({ config }) {
       return acc
     }, {}),
   }
-}
-
-function setupStore(reducers, initialState) {
-  const composeEnhancers =
-    typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-      ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-          actionsBlacklist: [TICK, MOVE],
-        })
-      : compose
-
-  const rootReducer = createRootReducer(reducers)
-
-  const store = createStore(
-    rootReducer,
-    initialState,
-    composeEnhancers(applyMiddleware(thunk))
-  )
-
-  return store
 }

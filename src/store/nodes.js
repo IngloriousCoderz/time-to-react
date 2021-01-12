@@ -1,7 +1,7 @@
+import { createAction } from '@reduxjs/toolkit'
 import { combineReducers } from 'redux'
-import { MOVE } from 'store/actionTypes'
 
-import { createNodeReducer } from './node'
+export const move = createAction('nodes/move')
 
 export function createNodesReducer(reducers = {}) {
   const nodesReducers = Object.keys(reducers).reduce((acc, node) => {
@@ -14,7 +14,7 @@ export function createNodesReducer(reducers = {}) {
 
   return function nodes(state = {}, action) {
     switch (action.type) {
-      case MOVE:
+      case move.type:
         const { node } = action.payload
         return {
           ...state,
@@ -24,5 +24,19 @@ export function createNodesReducer(reducers = {}) {
       default:
         return combinedReducer(state, action)
     }
+  }
+}
+
+function createNodeReducer(reducers) {
+  return function node(state = {}, action) {
+    return Object.keys(reducers).reduce(
+      (acc, sub) => {
+        const subReducer = reducers[sub]
+        const subState = state[sub]
+        acc[sub] = subReducer(subState, action)
+        return acc
+      },
+      { ...state }
+    )
   }
 }

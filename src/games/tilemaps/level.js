@@ -1,12 +1,14 @@
-import * as Types from 'store/actionTypes'
+import { createSlice } from '@reduxjs/toolkit'
+import { move } from 'store/nodes'
 
-export function status(state = {}, action) {
-  switch (action.type) {
-    case Types.MOVE:
-      const { direction } = action.payload
-      return { ...state, position: direction }
+const statusSlice = createSlice({
+  name: 'status',
+  initialState: {},
+  extraReducers: {
+    [move]: (state, action) => {
+      state.position = action.payload.direction
+    },
+  },
+})
 
-    default:
-      return state
-  }
-}
+export const status = statusSlice.reducer

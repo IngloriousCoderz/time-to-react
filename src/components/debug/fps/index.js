@@ -1,7 +1,7 @@
 import { useCounter } from 'components/hooks/useCounter'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { getDebug } from 'store/reducers'
+import { getDebug } from 'store'
 
 import classes from './fps.module.css'
 

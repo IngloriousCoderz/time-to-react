@@ -1,6 +1,6 @@
 import { memo } from 'react'
 import { useSelector } from 'react-redux'
-import { getNode } from 'store/reducers'
+import { getNode } from 'store'
 
 function Area2D({ node, children }) {
   const { status } = useSelector(getNode(node))

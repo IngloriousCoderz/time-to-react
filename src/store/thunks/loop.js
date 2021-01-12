@@ -1,4 +1,4 @@
-import { tick } from '../actions'
+import { tick } from 'store/frame'
 
 const MILLIS_TO_SECONDS = 1000
 

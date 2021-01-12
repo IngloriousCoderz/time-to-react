@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { move } from 'store/actions'
-import { getNode, getPhysics, getStage } from 'store/reducers'
+import { getNode, getPhysics, getStage } from 'store'
+import { move } from 'store/nodes'
 import { applyPhysics } from 'utils/physics'
 
 export default function usePhysics(node) {
@@ -20,7 +20,8 @@ export default function usePhysics(node) {
   })
   const Physics = applyPhysics(config.type)
   useEffect(() => {
-    const onUpdate = () => dispatch(move(node, body.current.position, bounds))
+    const onUpdate = () =>
+      dispatch(move({ node, direction: body.current.position, bounds }))
 
     body.current = Physics.addBody(body.current, { onUpdate })
 

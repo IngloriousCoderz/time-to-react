@@ -1,18 +1,18 @@
+import { createReducer } from '@reduxjs/toolkit'
 import { combineReducers } from 'redux'
 
-import { KEY_PRESSED } from '../actionTypes'
 import debug from './debug'
-import input from './input'
+import frame from './frame'
+import input, { keyPressed } from './input'
 import { createNodesReducer } from './nodes'
 import physics from './physics'
 import scene from './scene'
 import stage from './stage'
-import tick from './tick'
 
 export const getDebug = ({ debug }) => debug
 export const getStage = ({ stage }) => stage
 export const getPhysics = ({ physics }) => physics
-export const getTick = ({ tick }) => tick
+export const getFrame = ({ frame }) => frame
 export const getAllowedKeys = ({ input }) => input.allowedKeys
 export const getKeys = ({ input }) => input.keys
 export const getNode = (node) => ({ nodes }) => nodes[node]
@@ -23,31 +23,27 @@ export function createRootReducer(reducers) {
     debug,
     stage,
     physics,
-    tick,
+    frame,
     input,
     scene,
     nodes,
   })
 
-  return function rootReducer(state = {}, action) {
-    switch (action.type) {
-      case KEY_PRESSED:
+  return createReducer(
+    {},
+    {
+      [keyPressed]: (state, action) => {
         const newInput = input(state.input, action)
-        const newAction = {
-          ...action,
-          payload: {
-            keys: newInput.keys,
-            delta: state.tick.delta,
-          },
-        }
-        return {
-          ...state,
-          input: newInput,
-          nodes: nodes(state.nodes, newAction),
-        }
-
-      default:
-        return combinedReducer(state, action)
+        state.input = newInput
+        state.nodes = nodes(state.nodes, {
+          type: action.type,
+          payload: { keys: state.input.keys, delta: state.frame.delta },
+        })
+      },
+    },
+    [],
+    (state, action) => {
+      Object.assign(state, combinedReducer(state, action))
     }
-  }
+  )
 }

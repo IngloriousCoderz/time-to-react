@@ -1,28 +1,29 @@
-import * as Types from 'store/actionTypes'
+import { createSlice } from '@reduxjs/toolkit'
+import { keyPressed } from 'store/input'
+import { move } from 'store/nodes'
 import * as Vector from 'utils/vector'
 
-export function status(state = {}, action) {
-  switch (action.type) {
-    case Types.KEY_PRESSED:
+const statusSlice = createSlice({
+  name: 'status',
+  initialState: {},
+  extraReducers: {
+    [keyPressed]: (state, action) => {
       const { keys, delta } = action.payload
 
-      const velocity = updateVelocity(keys, state.speed, delta)
-      const sprite = updateSprite(velocity)
+      state.velocity = updateVelocity(keys, state, delta)
+      state.id = updateStatus(state)
+      state.flip = updateFlip(state)
+    },
 
-      return { ...state, velocity, ...sprite }
+    [move]: (state, action) => {
+      state.position = updateDirection(action.payload)
+    },
+  },
+})
 
-    case Types.MOVE:
-      const { direction, bounds } = action.payload
-      direction.x = Vector.clamp(direction.x, bounds.x, bounds.width)
-      direction.y = Vector.clamp(direction.y, bounds.y, bounds.height)
-      return { ...state, position: direction }
+export const status = statusSlice.reducer
 
-    default:
-      return state
-  }
-}
-
-function updateVelocity(keys, speed, delta) {
+function updateVelocity(keys, { speed }, delta) {
   let velocity = { x: 0, y: 0 }
 
   if (keys.ArrowRight) {
@@ -44,14 +45,7 @@ function updateVelocity(keys, speed, delta) {
   return velocity
 }
 
-function updateSprite(velocity) {
-  const id = updateStateId(velocity)
-  const flip = velocity.x < 0 ? 'h' : ''
-
-  return { id, flip }
-}
-
-function updateStateId(velocity) {
+function updateStatus({ velocity }) {
   if (!velocity.x && !velocity.y) {
     return 'idle'
   }
@@ -71,4 +65,15 @@ function updateStateId(velocity) {
   }
 
   return 'right'
+}
+
+function updateFlip({ velocity }) {
+  return velocity.x < 0 ? 'h' : ''
+}
+
+function updateDirection({ direction, bounds }) {
+  return {
+    x: Vector.clamp(direction.x, bounds.x, bounds.width),
+    y: Vector.clamp(direction.y, bounds.y, bounds.height),
+  }
 }

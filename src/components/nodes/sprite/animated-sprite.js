@@ -2,7 +2,7 @@ import { useCounter } from 'components/hooks/useCounter'
 import PropTypes from 'prop-types'
 import { memo, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { getNode } from 'store/reducers'
+import { getNode } from 'store'
 
 import Sprite from './sprite'
 

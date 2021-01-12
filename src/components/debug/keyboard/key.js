@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
-import { getAllowedKeys, getKeys } from 'store/reducers'
+import { getAllowedKeys, getKeys } from 'store'
 
 import classes from './keyboard.module.css'
 

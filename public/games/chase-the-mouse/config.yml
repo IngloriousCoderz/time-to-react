@@ -1,0 +1,164 @@
+---
+debug:
+  fps:
+    show: true
+    frequency: 60
+  keys:
+    show: true
+
+stage:
+  width: 800
+  height: 450
+  background:
+    radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1)
+    100%)
+
+physics:
+  type: simple
+  world:
+    gravity:
+      x: 0
+      y: 0
+      scale: 0.1
+
+input:
+  allowedKeys:
+    - ArrowLeft
+    - ArrowRight
+    - ArrowUp
+    - ArrowDown
+  keys: {}
+
+scene:
+  id: scene
+  type: Node
+  children:
+    - id: neko
+      type: Area2D
+      children:
+        - id: body
+          type: Body
+          children:
+            - id: sprite
+              type: AnimatedSprite
+
+nodes:
+  - id: neko
+    status:
+      id: idle
+      speed: 400
+      position:
+        x: 384
+        y: 209
+      velocity:
+        x: 0
+        y: 0
+      reducers: >
+        {
+          'input/keyPressed': (state, action) => {
+            const { keys, delta } = action.payload
+            
+            state.velocity = updateVelocity(keys, state, delta)
+            state.id = updateStatus(state)
+            state.flip = updateFlip(state)
+          },
+
+          'nodes/update': (state, action) => {
+            state.position = updateDirection(action.payload)
+          }
+        }
+
+        function updateVelocity(keys, { speed }, delta) {
+          let velocity = { x: 0, y: 0 }
+          
+          if (keys.ArrowRight) {
+            velocity.x += 1
+          }
+          if (keys.ArrowLeft) {
+            velocity.x -= 1
+          }
+          if (keys.ArrowDown) {
+            velocity.y += 1
+          }
+          if (keys.ArrowUp) {
+            velocity.y -= 1
+          }
+
+          velocity = Vector.normalize(velocity)
+          velocity = Vector.mult(velocity, speed)
+          velocity = Vector.mult(velocity, delta)
+          
+          return velocity
+        }
+
+        function updateStatus({ velocity }) {
+          if (!velocity.x && !velocity.y) {
+            return 'idle'
+          }
+          
+          const angle = Vector.angle(velocity)
+          
+          if (Math.abs(angle) > Math.PI / 3 && Math.abs(angle) < (Math.PI * 2) / 3) {
+            return angle > 0 ? 'down' : 'up'
+          }
+          
+          if ((Math.abs(angle) >= Math.PI / 6 && Math.abs(angle) <= Math.PI / 3) || (Math.abs(angle) >= (Math.PI * 2) / 3 && Math.abs(angle) <= (Math.PI * 5) / 6)) {
+            return angle > 0 ? 'rightDown' : 'rightUp'
+          }
+          
+          return 'right'
+        }
+
+        function updateFlip({ velocity }) {
+          return velocity.x < 0 ? 'h' : ''
+        }
+
+        function updateDirection({ direction, bounds }) {
+          return {
+            x: Vector.clamp(direction.x, bounds.x, bounds.width),
+            y: Vector.clamp(direction.y, bounds.y, bounds.height),
+          }
+        }
+    physics:
+      shape: circle
+      args:
+        - 0
+        - 0
+        - 16
+    sprite:
+      src: games/chase-the-mouse/neko/sprite.png
+      width: 192
+      height: 192
+      rows: 6
+      cols: 6
+      scale: 2
+      speed: 20
+      states:
+        idle:
+          - - 4
+            - 0
+        down:
+          - - 1
+            - 0
+          - - 0
+            - 1
+        up:
+          - - 4
+            - 4
+          - - 0
+            - 5
+        rightDown:
+          - - 1
+            - 2
+          - - 2
+            - 2
+        rightUp:
+          - - 5
+            - 3
+          - - 5
+            - 4
+        right:
+          - - 4
+            - 2
+          - - 4
+            - 3

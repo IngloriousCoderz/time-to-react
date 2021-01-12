@@ -4,7 +4,7 @@ const input = createSlice({
   name: 'input',
   initialState: {},
   reducers: {
-    keyPressed(state, action) {
+    keyPressed: (state, action) => {
       state.keys = { ...state.keys, ...action.payload.keys }
     },
   },

@@ -4,7 +4,7 @@ const frameSlice = createSlice({
   name: 'frame',
   initialState: {},
   reducers: {
-    tick(state, action) {
+    tick: (state, action) => {
       state.delta = action.payload
       state.fps = 1 / action.payload
     },

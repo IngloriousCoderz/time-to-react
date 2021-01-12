@@ -8,7 +8,7 @@ import reportWebVitals from './reportWebVitals'
 
 const game = window.location.search
   ? window.location.search.split('=')[1]
-  : process.env.REACT_APP_GAME
+  : process.env.REACT_APP_DEFAULT_GAME
 
 createGame(game).then((Game) =>
   ReactDOM.render(

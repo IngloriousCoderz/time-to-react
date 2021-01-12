@@ -1,13 +1,10 @@
 import { createReducer } from '@reduxjs/toolkit'
 import { combineReducers } from 'redux'
 
-import debug from './debug'
 import frame from './frame'
 import input, { keyPressed } from './input'
 import { createNodesReducer } from './nodes'
-import physics from './physics'
-import scene from './scene'
-import stage from './stage'
+import noop from './noop'
 
 export const getDebug = ({ debug }) => debug
 export const getStage = ({ stage }) => stage
@@ -20,12 +17,12 @@ export const getNode = (node) => ({ nodes }) => nodes[node]
 export function createRootReducer(reducers) {
   const nodes = createNodesReducer(reducers)
   const combinedReducer = combineReducers({
-    debug,
-    stage,
-    physics,
+    debug: noop,
+    stage: noop,
+    physics: noop,
     frame,
     input,
-    scene,
+    scene: noop,
     nodes,
   })
 

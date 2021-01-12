@@ -1,19 +1,20 @@
 import 'assets/style.css'
 
-import { createGame } from 'components/game'
+import Game from 'components/game'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { createGame } from 'utils/game'
 
 import reportWebVitals from './reportWebVitals'
 
-const game = window.location.search
+const name = window.location.search
   ? window.location.search.split('=')[1]
   : process.env.REACT_APP_DEFAULT_GAME
 
-createGame(game).then((Game) =>
+createGame(name).then((game) =>
   ReactDOM.render(
     <React.StrictMode>
-      <Game />
+      <Game game={game} />
     </React.StrictMode>,
     document.getElementById('root')
   )

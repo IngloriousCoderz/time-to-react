@@ -5,10 +5,12 @@ debug:
     frequency: 60
   keys:
     show: true
+
 stage:
   width: 800
   height: 450
   background: rgb(58, 155, 220)
+
 physics:
   type: matter-js
   world:
@@ -16,6 +18,7 @@ physics:
       x: 0
       y: 1
       scale: 0.1
+
 input:
   allowedKeys:
     - ArrowLeft
@@ -24,6 +27,7 @@ input:
     - ' '
     - a
   keys: {}
+
 scene:
   id: scene
   type: Node
@@ -38,6 +42,7 @@ scene:
           children:
             - id: sprite
               type: AnimatedSprite
+
 nodes:
   - id: level
     status:
@@ -127,7 +132,7 @@ nodes:
 
           'nodes/update': (state, action) => {
             state.position = updateDirection(action.payload)
-          },
+          }
         }
 
         function updateForce(keys, { speed }, delta) {

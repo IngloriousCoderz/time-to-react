@@ -15,7 +15,7 @@ export function createNodesReducer(reducers = {}) {
   return createReducer(
     {},
     {
-      update: (state, action) => {
+      [update]: (state, action) => {
         const { node } = action.payload
         state[node] = nodesReducers[node](state[node], action)
       },

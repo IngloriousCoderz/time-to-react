@@ -1,9 +1,11 @@
 import { useResizeListener } from 'components/hooks/useResizeListener'
-import PropTypes from 'prop-types'
+import { useSelector } from 'react-redux'
+import { getStage } from 'store'
 
 import classes from './stage.module.css'
 
-function Stage({ width, height, background, children }) {
+function Stage({ children }) {
+  const { width, height, background } = useSelector(getStage)
   const { ref, transform } = useResizeListener(width, height)
 
   const style = { width, height, background, transform }
@@ -15,16 +17,6 @@ function Stage({ width, height, background, children }) {
       </div>
     </div>
   )
-}
-
-Stage.propTypes = {
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  background: PropTypes.string,
-}
-
-Stage.defaultProps = {
-  background: '#4c4c4c',
 }
 
 export default Stage

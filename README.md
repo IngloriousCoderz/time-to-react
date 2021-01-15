@@ -1,70 +1,69 @@
-# Getting Started with Create React App
+# Time To React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Would you like to create 2D games with a modern, lean, component-based, open source game engine? Then download [Godot](https://godotengine.org/)!
 
-## Available Scripts
+But do you want the game engine to run on the browser, or just want to program grames in JavaScript? Then go for [Phaser](https://phaser.io/)!
 
-In the project directory, you can run:
+And what if you want the best of both worlds? Then it's Time To React (TTR)!
 
-### `yarn start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- [React](https://reactjs.org/)-based, so relying on [Fiber](https://github.com/acdlite/react-fiber-architecture) for optimal performance
+- [Redux](https://redux.js.org/)-based, so game snapshots can be saved, loaded, and shared
+- Functional Programming-based, so no dealing with `this`
+- ...But state is mutated with [Immer](https://immerjs.github.io/immer/docs/introduction)
+- Games are built through a declarative config file
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Usage
 
-### `yarn test`
+Install dependencies through
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+yarn
+```
 
-### `yarn build`
+or
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+npm install
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+then start the engine with
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+yarn start
+```
 
-### `yarn eject`
+or
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```
+npm start
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+And the default game should load at http://localhost:3000/
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Games
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+The default loaded game is "Chase the mouse".
 
-## Learn More
+Other games can be loaded by appending their name as a URL parameter: http://localhost:3000/?game=chase-the-mouse
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Available games:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Chase the mouse (`chase-the-mouse`): a prototype in which you move a cat around the place with the arrow keys
+- Tilemaps (`tilemaps`): a prototype showing a tilemap taken from [react-game-kit](https://github.com/FormidableLabs/react-game-kit)
+- RGK Demo (`rgk-demo`): an attempt to reproduce the whole demo from [react-game-kit](https://github.com/FormidableLabs/react-game-kit)
 
-### Code Splitting
+## Todo
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- [ ] Add mouse input support
+- [ ] Add audio support
+- [ ] Complete the RGK Demo game
+- [ ] Add some pre-cooked game AI
+- [ ] Create an editor
 
-### Analyzing the Bundle Size
+## Acknowledgments
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+As you can imagine, this project is heavily inspired by [react-game-kit](https://github.com/FormidableLabs/react-game-kit) and [Godot](https://godotengine.org/), from which I borrowed some concepts and even some code.
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The main source of inspiration however was the React-based framework I created for [Irion](https://www.irion-edm.com/), the SVG charts I created for [Tetra Pak](https://www.tetrapak.com/), and the study of [AI for Game Developers](https://www.oreilly.com/library/view/ai-for-game/0596005555/) which lead me to implement some of the described algorithms in an environment that could be familiar to me.

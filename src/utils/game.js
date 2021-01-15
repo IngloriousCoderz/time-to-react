@@ -2,7 +2,7 @@ import { configureStore, createSlice } from '@reduxjs/toolkit'
 import yaml from 'js-yaml'
 import { createRootReducer } from 'store'
 import { tick } from 'store/frame'
-import { update } from 'store/nodes'
+import { animationEnd, update } from 'store/nodes'
 import { startListening } from 'store/thunks/input'
 import { startLoop } from 'store/thunks/loop'
 import * as Vector from 'utils/vector'
@@ -14,7 +14,7 @@ export async function createGame(name) {
 
   const store = configureStore({
     reducer: createRootReducer(reducers),
-    devTools: { actionsBlacklist: [tick, update] },
+    devTools: { actionsBlacklist: [tick, update, animationEnd] },
     preloadedState: preloadState(game),
   })
 
@@ -48,6 +48,7 @@ function createReducers(game) {
           const func = new Function('Vector', `return ${slice.reducers}`)
           const reducer = func(Vector)
           reducers.push([sliceName, reducer])
+          delete slice.reducers
         }
       })
       return [id, Object.fromEntries(reducers)]

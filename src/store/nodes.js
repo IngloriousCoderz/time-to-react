@@ -2,6 +2,7 @@ import { createAction, createReducer } from '@reduxjs/toolkit'
 import { combineReducers } from 'redux'
 
 export const update = createAction('nodes/update')
+export const animationEnd = createAction('node/animationEnd')
 
 export function createNodesReducer(reducers = {}) {
   const nodesReducers = Object.keys(reducers).reduce((acc, node) => {

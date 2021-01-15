@@ -22,6 +22,10 @@ export function addBody({ shape, args, ...options }, listeners) {
   return body
 }
 
+export function applyForce(body, position, force) {
+  Matter.Body.applyForce(body, position, force)
+}
+
 export function setVelocity(body, velocity) {
   Matter.Body.setVelocity(body, velocity)
 }

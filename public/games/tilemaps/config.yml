@@ -18,7 +18,9 @@ physics:
     scale: 0.1
 
 input:
-  allowedKeys: []
+  allowedKeys:
+    - ArrowLeft
+    - ArrowRight
   keys: {}
 
 scene:
@@ -34,9 +36,21 @@ nodes:
 
       reducers: >
         {
-          'nodes/update': (state, action) => {
-            state.position = action.payload.direction
+          'input/keyPressed': (state, action) => {
+            state.position.x += updatePosition(action.payload)
           }
+        }
+
+        function updatePosition({ keys }) {
+          if (keys.ArrowLeft) {
+              return 10
+            }
+
+            if (keys.ArrowRight) {
+              return -10
+            }
+
+            return 0
         }
     layers:
       - id: buildings

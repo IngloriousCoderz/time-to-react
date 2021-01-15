@@ -1,13 +1,15 @@
 import { useCounter } from 'components/hooks/useCounter'
 import PropTypes from 'prop-types'
 import { memo, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getNode } from 'store'
+import { animationEnd } from 'store/nodes'
 
 import Sprite from './sprite'
 
 function AnimatedSprite({ node }) {
   const { status, sprite } = useSelector(getNode(node))
+  const dispatch = useDispatch()
   const { id, flip } = status
   const { states, speed, ...rest } = sprite
 
@@ -20,8 +22,10 @@ function AnimatedSprite({ node }) {
   useEffect(() => {
     if (frame >= frames.length) {
       setFrame(0)
+      dispatch(animationEnd(node))
     }
     setCell(frames[frame])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [frame, frames])
 
   return <Sprite {...rest} flip={flip} cell={cell} />

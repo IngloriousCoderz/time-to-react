@@ -53,18 +53,21 @@ nodes:
       velocity:
         x: 0
         y: 0
+      force:
+        x: 0
+        y: 0
       reducers: >
         {
           'input/keyPressed': (state, action) => {
             const { keys, delta } = action.payload
             
             state.velocity = updateVelocity(keys, state, delta)
-            state.id = updateStatus(state)
-            state.flip = updateFlip(state)
           },
 
           'nodes/update': (state, action) => {
-            state.position = updateDirection(action.payload)
+            state.position = updatePosition(action.payload)
+            state.id = updateStatus(state)
+            state.flip = updateFlip(state)
           }
         }
 
@@ -113,10 +116,10 @@ nodes:
           return velocity.x < 0 ? 'h' : ''
         }
 
-        function updateDirection({ direction, bounds }) {
+        function updatePosition({ body, bounds }) {
           return {
-            x: Vector.clamp(direction.x, bounds.x, bounds.width),
-            y: Vector.clamp(direction.y, bounds.y, bounds.height),
+            x: Vector.clamp(body.position.x, bounds.x, bounds.width),
+            y: Vector.clamp(body.position.y, bounds.y, bounds.height),
           }
         }
     physics:

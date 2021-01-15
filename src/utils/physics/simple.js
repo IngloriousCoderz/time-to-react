@@ -32,6 +32,11 @@ export function addBody(body, listeners) {
   return body
 }
 
+export function applyForce(body, position, force) {
+  body.force = force
+  body.velocity = Vector.sum(body.velocity, force)
+}
+
 export function setVelocity(body, velocity) {
   body.velocity = velocity
   body.position = Vector.sum(body.position, velocity)

@@ -53,7 +53,7 @@ nodes:
       reducers: >
         {
           'nodes/update': (state, action) => {
-            state.position = action.payload.direction
+            state.position = action.payload.position
           }
         }
     layers:
@@ -119,6 +119,9 @@ nodes:
       velocity:
         x: 0
         y: 0
+      force:
+        x: 0
+        y: 0
       reducers: >
         {
           'input/keyPressed': (state, action) => {
@@ -126,21 +129,34 @@ nodes:
 
             state.force = updateForce(keys, state, delta)
             state.velocity = updateVelocity(keys, state, delta)
-            state.id = updateStatus(keys, state)
-            state.flip = updateFlip(state)
+            state.direction = updateDirection(keys, state)
+            
+            const id = updateStatus(keys, state)
+            if (id !== state.id && id === 'punching') {
+              state.punching = true
+            }
+            state.id = id
           },
 
           'nodes/update': (state, action) => {
-            state.position = updateDirection(action.payload)
+            state.position = updatePosition(action.payload)
+            state.flip = updateFlip(state)
+          },
+
+          'node/animationEnd': (state, action) => {
+            if (state.id === 'punching') {
+              state.punching = false
+              state.id = updateStatus({}, state)
+            }
           }
         }
 
         function updateForce(keys, { speed }, delta) {
-          if (keys.a) {
+          if (keys[' ']) {
             return { x: 0, y: -0.15 }
           }
 
-          return null
+          return { x: 0, y: 0 }
         }
 
         function updateVelocity(keys, { speed }, delta) {
@@ -149,6 +165,7 @@ nodes:
           if (keys.ArrowRight) {
             velocity.x += 1
           }
+          
           if (keys.ArrowLeft) {
             velocity.x -= 1
           }
@@ -160,30 +177,42 @@ nodes:
           return velocity
         }
 
-        function updateStatus(keys, { velocity }) {
-          if (keys.a) {
+        function updateDirection(keys, { direction }) {
+          if (keys.ArrowRight) {
+            return 'right'
+          }
+
+          if (keys.ArrowLeft) {
+            return 'left'
+          }
+          
+          return direction
+        }
+
+        function updateStatus(keys, { id, velocity, punching }) {
+          if (keys.a || punching) {
             return 'punching'
           }
 
-          if (!velocity.x && !velocity.y) {
-            return 'idle'
-          }
-
-          if (velocity.y !== 0) {
+          if (velocity.y) {
             return 'jumping'
           }
 
-          return 'right'
+          if (velocity.x) {
+            return 'right'
+          }
+
+          return 'idle'
         }
 
-        function updateFlip({ velocity }) {
-          return velocity.x < 0 ? 'h' : ''
+        function updateFlip({ direction }) {
+          return direction === 'left' ? 'h' : ''
         }
 
-        function updateDirection({ direction, bounds }) {
+        function updatePosition({ body, bounds }) {
           return {
-            x: Vector.clamp(direction.x, bounds.x, bounds.width),
-            y: Vector.clamp(direction.y, bounds.y, bounds.height),
+            x: Vector.clamp(body.position.x, bounds.x, bounds.width),
+            y: Vector.clamp(body.position.y, bounds.y, bounds.height),
           }
         }
     physics:

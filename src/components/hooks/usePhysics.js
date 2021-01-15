@@ -14,22 +14,101 @@ export default function usePhysics(node) {
   const dispatch = useDispatch()
   const body = useRef({
     ...physics,
-    force: status.force || {},
+    force: status.force,
     position: status.position,
     velocity: status.velocity,
   })
   const Physics = applyPhysics(config.type)
   useEffect(() => {
-    const onUpdate = () =>
-      dispatch(update({ node, direction: body.current.position, bounds }))
+    const onUpdate = () => {
+      const {
+        angle,
+        angularSpeed,
+        angularVelocity,
+        area,
+        // axes,
+        // bounds,
+        // collisionFilter,
+        density,
+        force,
+        friction,
+        frictionAir,
+        frictionStatic,
+        id,
+        inertia,
+        inverseIntertia,
+        inverseMass,
+        isSensor,
+        isSleeping,
+        isStatic,
+        label,
+        mass,
+        motion,
+        position,
+        restitution,
+        sleepThreshold,
+        slop,
+        speed,
+        timeScale,
+        torque,
+        type,
+        velocity,
+        // vertices,
+      } = body.current
+
+      dispatch(
+        update({
+          node,
+          body: {
+            angle,
+            angularSpeed,
+            angularVelocity,
+            area,
+            // axes,
+            // bounds,
+            // collisionFilter,
+            density,
+            force,
+            friction,
+            frictionAir,
+            frictionStatic,
+            id,
+            inertia,
+            inverseIntertia,
+            inverseMass,
+            isSensor,
+            isSleeping,
+            isStatic,
+            label,
+            mass,
+            motion,
+            position,
+            restitution,
+            sleepThreshold,
+            slop,
+            speed,
+            timeScale,
+            torque,
+            type,
+            velocity,
+            // vertices,
+          },
+          bounds,
+        })
+      )
+    }
 
     body.current = Physics.addBody(body.current, { onUpdate })
 
-    return () => Physics.reupdateBody(body.current, { onUpdate })
+    return () => Physics.removeBody(body.current, { onUpdate })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const { velocity } = status
+  const { force, velocity } = status
+  useEffect(() => {
+    Physics.applyForce(body.current, { x: 0, y: 0 }, force)
+  }, [force, Physics])
+
   useEffect(() => {
     Physics.setVelocity(body.current, velocity)
   }, [velocity, Physics])

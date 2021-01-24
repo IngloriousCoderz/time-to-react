@@ -12,13 +12,10 @@ export function start(physics) {
 
 export function update(delta) {
   const { x, y, scale } = engine.world.gravity
-  engine.world.bodies.forEach((body) =>
-    Object.keys(body.listeners).forEach((listener) => {
-      const velocity = Vector.sum(body.velocity, { x: x * scale, y: y * scale })
-      setVelocity(body, velocity)
-      body.listeners[listener]()
-    })
-  )
+  engine.world.bodies.forEach((body) => {
+    applyForce(body, { x: 0, y: 0 }, { x: x * scale, y: y * scale })
+    Object.values(body.listeners).forEach((listener) => listener())
+  })
 }
 
 export function addBody(body, listeners) {
@@ -34,7 +31,7 @@ export function addBody(body, listeners) {
 
 export function applyForce(body, position, force) {
   body.force = force
-  body.velocity = Vector.sum(body.velocity, force)
+  setVelocity(body, Vector.sum(body.velocity, force))
 }
 
 export function setVelocity(body, velocity) {

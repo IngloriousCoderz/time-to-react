@@ -64,7 +64,7 @@ nodes:
             state.velocity = updateVelocity(keys, state, delta)
           },
 
-          'nodes/update': (state, action) => {
+          'nodes/physicsUpdate': (state, action) => {
             state.position = updatePosition(action.payload)
             state.id = updateStatus(state)
             state.flip = updateFlip(state)
@@ -116,11 +116,8 @@ nodes:
           return velocity.x < 0 ? 'h' : ''
         }
 
-        function updatePosition({ body, bounds }) {
-          return {
-            x: Vector.clamp(body.position.x, bounds.x, bounds.width),
-            y: Vector.clamp(body.position.y, bounds.y, bounds.height),
-          }
+        function updatePosition({ body }) {
+          return { ...body.position }
         }
     physics:
       shape: circle

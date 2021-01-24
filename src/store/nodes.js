@@ -1,7 +1,7 @@
 import { createAction, createReducer } from '@reduxjs/toolkit'
 import { combineReducers } from 'redux'
 
-export const update = createAction('nodes/update')
+export const physicsUpdate = createAction('nodes/physicsUpdate')
 export const animationEnd = createAction('node/animationEnd')
 
 export function createNodesReducer(reducers = {}) {
@@ -16,7 +16,7 @@ export function createNodesReducer(reducers = {}) {
   return createReducer(
     {},
     {
-      [update]: (state, action) => {
+      [physicsUpdate]: (state, action) => {
         const { node } = action.payload
         state[node] = nodesReducers[node](state[node], action)
       },

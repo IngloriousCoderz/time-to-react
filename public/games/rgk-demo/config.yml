@@ -130,7 +130,7 @@ nodes:
             state.force = updateForce(keys, state, delta)
             state.velocity = updateVelocity(keys, state, delta)
             state.direction = updateDirection(keys, state)
-            
+
             const id = updateStatus(keys, state)
             if (id !== state.id && id === 'punching') {
               state.punching = true
@@ -138,7 +138,7 @@ nodes:
             state.id = id
           },
 
-          'nodes/update': (state, action) => {
+          'nodes/physicsUpdate': (state, action) => {
             state.position = updatePosition(action.payload)
             state.flip = updateFlip(state)
           },
@@ -209,11 +209,8 @@ nodes:
           return direction === 'left' ? 'h' : ''
         }
 
-        function updatePosition({ body, bounds }) {
-          return {
-            x: Vector.clamp(body.position.x, bounds.x, bounds.width),
-            y: Vector.clamp(body.position.y, bounds.y, bounds.height),
-          }
+        function updatePosition({ body }) {
+          return { ...body.position }
         }
     physics:
       shape: rectangle

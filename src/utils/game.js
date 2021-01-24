@@ -2,7 +2,7 @@ import { configureStore, createSlice } from '@reduxjs/toolkit'
 import yaml from 'js-yaml'
 import { createRootReducer } from 'store'
 import { tick } from 'store/frame'
-import { animationEnd, update } from 'store/nodes'
+import { animationEnd, physicsUpdate } from 'store/nodes'
 import { startListening } from 'store/thunks/input'
 import { startLoop } from 'store/thunks/loop'
 import * as Vector from 'utils/vector'
@@ -14,7 +14,7 @@ export async function createGame(name) {
 
   const store = configureStore({
     reducer: createRootReducer(reducers),
-    devTools: { actionsBlacklist: [tick, update, animationEnd] },
+    devTools: { actionsBlacklist: [tick, physicsUpdate, animationEnd] },
     preloadedState: preloadState(game),
   })
 

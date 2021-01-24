@@ -1,23 +1,19 @@
 import { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getNode, getPhysics, getStage } from 'store'
-import { update } from 'store/nodes'
+import { physicsUpdate } from 'store/nodes'
 import { applyPhysics } from 'utils/physics'
 
 export default function usePhysics(node) {
   const config = useSelector(getPhysics)
-  const stage = useSelector(getStage)
+  const { width, height } = useSelector(getStage)
   const { physics, status } = useSelector(getNode(node))
 
-  const bounds = { x: 0, y: 0, width: stage.width, height: stage.height }
+  const bounds = { x: 0, y: 0, width, height }
+  const { force, velocity, position } = status
 
   const dispatch = useDispatch()
-  const body = useRef({
-    ...physics,
-    force: status.force,
-    position: status.position,
-    velocity: status.velocity,
-  })
+  const body = useRef({ ...physics, force, velocity, position })
   const Physics = applyPhysics(config.type)
   useEffect(() => {
     const onUpdate = () => {
@@ -34,14 +30,14 @@ export default function usePhysics(node) {
         friction,
         frictionAir,
         frictionStatic,
-        id,
+        // id,
         inertia,
         inverseIntertia,
         inverseMass,
         isSensor,
         isSleeping,
         isStatic,
-        label,
+        // label,
         mass,
         motion,
         position,
@@ -51,13 +47,13 @@ export default function usePhysics(node) {
         speed,
         timeScale,
         torque,
-        type,
+        // type,
         velocity,
         // vertices,
       } = body.current
 
       dispatch(
-        update({
+        physicsUpdate({
           node,
           body: {
             angle,
@@ -72,14 +68,14 @@ export default function usePhysics(node) {
             friction,
             frictionAir,
             frictionStatic,
-            id,
+            // id,
             inertia,
             inverseIntertia,
             inverseMass,
             isSensor,
             isSleeping,
             isStatic,
-            label,
+            // label,
             mass,
             motion,
             position,
@@ -89,7 +85,7 @@ export default function usePhysics(node) {
             speed,
             timeScale,
             torque,
-            type,
+            // type,
             velocity,
             // vertices,
           },
@@ -104,7 +100,6 @@ export default function usePhysics(node) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const { force, velocity } = status
   useEffect(() => {
     Physics.applyForce(body.current, { x: 0, y: 0 }, force)
   }, [force, Physics])

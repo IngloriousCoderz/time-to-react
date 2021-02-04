@@ -1,9 +1,9 @@
 import { memo } from 'react'
 import { useSelector } from 'react-redux'
-import { getNode } from 'store'
+import { getScene } from 'store'
 
 function Area2D({ node, children }) {
-  const { status } = useSelector(getNode(node))
+  const { status } = useSelector(getScene(node))
 
   const style = {
     position: 'absolute',

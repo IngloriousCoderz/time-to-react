@@ -2,7 +2,7 @@ import { configureStore, createSlice } from '@reduxjs/toolkit'
 import yaml from 'js-yaml'
 import { createRootReducer } from 'store'
 import { tick } from 'store/frame'
-import { animationEnd, physicsUpdate } from 'store/nodes'
+import { animationEnd, physicsUpdate } from 'store/scenes'
 import { startListening } from 'store/thunks/input'
 import { startLoop } from 'store/thunks/loop'
 import * as Vector from 'utils/vector'
@@ -38,8 +38,7 @@ async function loadGame(name) {
 
 function createReducers(game) {
   const nodeReducers = Object.fromEntries(
-    game.nodes.map((node) => {
-      const { id, ...rest } = node
+    game.scenes.map(({ id, ...rest }) => {
       const reducers = []
       Object.keys(rest).forEach((sliceName) => {
         const slice = rest[sliceName]
@@ -73,10 +72,10 @@ function createReducers(game) {
 function preloadState(game) {
   return {
     ...game,
-    nodes: game.nodes.reduce((acc, node) => {
-      acc[node.id] = node
-      if (node.physics && node.physics.inertia === 'Infinity') {
-        node.physics.inertia = Infinity
+    scenes: game.scenes.reduce((acc, scene) => {
+      acc[scene.id] = scene
+      if (scene.physics && scene.physics.inertia === 'Infinity') {
+        scene.physics.inertia = Infinity
       }
       return acc
     }, {}),

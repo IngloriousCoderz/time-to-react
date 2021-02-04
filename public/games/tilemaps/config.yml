@@ -23,12 +23,11 @@ input:
     - ArrowRight
   keys: {}
 
-scene:
-  id: level
-  type: Tilemap
+root: level
 
-nodes:
+scenes:
   - id: level
+    type: Tilemap
     status:
       position:
         x: 0

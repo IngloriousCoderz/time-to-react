@@ -29,21 +29,21 @@ input:
     - ArrowDown
   keys: {}
 
-scene:
-  id: scene
-  type: Node
-  children:
-    - id: neko
-      type: Area2D
-      children:
-        - id: body
-          type: Body
-          children:
-            - id: sprite
-              type: AnimatedSprite
+root: game
 
-nodes:
+scenes:
+  - id: game
+    type: Node
+    children:
+      - id: neko
   - id: neko
+    type: Area2D
+    children:
+      - id: body
+        type: Body
+        children:
+          - id: sprite
+            type: AnimatedSprite
     status:
       id: idle
       speed: 400
@@ -64,7 +64,7 @@ nodes:
             state.velocity = updateVelocity(keys, state, delta)
           },
 
-          'nodes/physicsUpdate': (state, action) => {
+          'scenes/physicsUpdate': (state, action) => {
             state.position = updatePosition(action.payload)
             state.id = updateStatus(state)
             state.flip = updateFlip(state)

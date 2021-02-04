@@ -28,23 +28,16 @@ input:
     - a
   keys: {}
 
-scene:
-  id: scene
-  type: Node
-  children:
-    - id: level
-      type: Tilemap
-    - id: character
-      type: Area2D
-      children:
-        - id: body
-          type: Body
-          children:
-            - id: sprite
-              type: AnimatedSprite
+root: game
 
-nodes:
+scenes:
+  - id: game
+    type: Node
+    children:
+      - id: level
+      - id: character
   - id: level
+    type: Tilemap
     status:
       position:
         x: 0
@@ -110,6 +103,13 @@ nodes:
             - 0
             - 0
   - id: character
+    type: Area2D
+    children:
+      - id: body
+        type: Body
+        children:
+          - id: sprite
+            type: AnimatedSprite
     status:
       id: idle
       speed: 400
@@ -138,12 +138,12 @@ nodes:
             state.id = id
           },
 
-          'nodes/physicsUpdate': (state, action) => {
+          'scenes/physicsUpdate': (state, action) => {
             state.position = updatePosition(action.payload)
             state.flip = updateFlip(state)
           },
 
-          'node/animationEnd': (state, action) => {
+          'scenes/animationEnd': (state, action) => {
             if (state.id === 'punching') {
               state.punching = false
               state.id = updateStatus({}, state)

@@ -1,11 +1,11 @@
 import { memo } from 'react'
 import { useSelector } from 'react-redux'
-import { getNode } from 'store'
+import { getScene } from 'store'
 
 import Layer from './layer'
 
 function Tilemap({ node }) {
-  const { status, layers } = useSelector(getNode(node))
+  const { status, layers } = useSelector(getScene(node))
 
   const style = {
     position: 'absolute',

@@ -1,13 +1,13 @@
 import { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getNode, getPhysics, getStage } from 'store'
-import { physicsUpdate } from 'store/nodes'
+import { getPhysics, getScene, getStage } from 'store'
+import { physicsUpdate } from 'store/scenes'
 import { applyPhysics } from 'utils/physics'
 
 export default function usePhysics(node) {
   const config = useSelector(getPhysics)
   const { width, height } = useSelector(getStage)
-  const { physics, status } = useSelector(getNode(node))
+  const { physics, status } = useSelector(getScene(node))
 
   const bounds = { x: 0, y: 0, width, height }
   const { force, velocity, position } = status

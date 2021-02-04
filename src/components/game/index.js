@@ -8,13 +8,13 @@ import Stage from '../stage'
 import World from '../world'
 
 function Game({ game: store }) {
-  const { debug, scene } = store.getState()
+  const { root, scenes, debug } = store.getState()
 
   return (
     <Provider store={store}>
       <Stage>
         <World>
-          <Node node={scene.id} scene={scene} />
+          <Node scene={scenes[root]} root={root} />
         </World>
 
         {debug.fps.show && <Fps />}

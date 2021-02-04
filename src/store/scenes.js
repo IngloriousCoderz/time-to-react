@@ -1,10 +1,10 @@
 import { createAction, createReducer } from '@reduxjs/toolkit'
 import { combineReducers } from 'redux'
 
-export const physicsUpdate = createAction('nodes/physicsUpdate')
-export const animationEnd = createAction('node/animationEnd')
+export const physicsUpdate = createAction('scenes/physicsUpdate')
+export const animationEnd = createAction('scenes/animationEnd')
 
-export function createNodesReducer(reducers = {}) {
+export function createScenesReducer(reducers = {}) {
   const nodesReducers = Object.keys(reducers).reduce((acc, node) => {
     const nodeReducer = reducers[node]
     acc[node] = createNodeReducer(nodeReducer)

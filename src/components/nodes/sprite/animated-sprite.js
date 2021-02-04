@@ -2,13 +2,13 @@ import { useCounter } from 'components/hooks/useCounter'
 import PropTypes from 'prop-types'
 import { memo, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getNode } from 'store'
-import { animationEnd } from 'store/nodes'
+import { getScene } from 'store'
+import { animationEnd } from 'store/scenes'
 
 import Sprite from './sprite'
 
 function AnimatedSprite({ node }) {
-  const { status, sprite } = useSelector(getNode(node))
+  const { status, sprite } = useSelector(getScene(node))
   const dispatch = useDispatch()
   const { id, flip } = status
   const { states, speed, ...rest } = sprite

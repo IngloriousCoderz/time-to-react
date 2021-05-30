@@ -18,6 +18,7 @@ function Node({ scene, root }) {
   }
 
   const Component = Nodes[type]
+
   return (
     <Component node={root}>
       {subscenes.map((scene) => (

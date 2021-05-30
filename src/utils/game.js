@@ -37,7 +37,7 @@ async function loadGame(name) {
 }
 
 function createReducers(game) {
-  const nodeReducers = Object.fromEntries(
+  const sceneReducers = Object.fromEntries(
     game.scenes.map(({ id, ...rest }) => {
       const reducers = []
       Object.keys(rest).forEach((sliceName) => {
@@ -54,8 +54,8 @@ function createReducers(game) {
     })
   )
 
-  return Object.keys(nodeReducers).reduce((acc, nodeName) => {
-    const sliceReducers = nodeReducers[nodeName]
+  return Object.keys(sceneReducers).reduce((acc, nodeName) => {
+    const sliceReducers = sceneReducers[nodeName]
     acc[nodeName] = Object.keys(sliceReducers).reduce((acc, sliceName) => {
       const sliceReducer = sliceReducers[sliceName]
       acc[sliceName] = createSlice({

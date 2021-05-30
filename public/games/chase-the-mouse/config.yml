@@ -36,6 +36,13 @@ scenes:
     type: Node
     children:
       - id: neko
+  #   children:
+  #     - id: neko1
+  #     - id: neko2
+  # - id: neko1
+  #   type: neko
+  # - id: neko2
+  #   type: neko
   - id: neko
     type: Area2D
     children:
